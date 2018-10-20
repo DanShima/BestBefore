@@ -31,11 +31,11 @@ class ChallengeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initDetailRecyclerView()
+        initRecyclerView()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun initDetailRecyclerView() {
+    private fun initRecyclerView() {
         challengeListAdapter = ChallengeListAdapter(this::startChallenge)
         detail_recyclerview.apply {
             adapter = challengeListAdapter
