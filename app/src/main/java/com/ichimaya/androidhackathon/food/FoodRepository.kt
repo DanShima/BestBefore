@@ -23,6 +23,7 @@ class FoodRepository {
                                             id = food.child("id").getValue<String>(String::class.java) ?: return,
                                             name = food.child("name").getValue<String>(String::class.java) ?: return,
                                             expiryDate = food.child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
+                                            category = food.child("category").getValue<String>(String::class.java) ?: return,
                                             consumeDate = food.child("consumeDate").getValue<Long>(Long::class.java)
                                     )
                                 })
