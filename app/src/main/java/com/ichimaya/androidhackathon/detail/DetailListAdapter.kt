@@ -1,4 +1,4 @@
-package com.ichimaya.androidhackathon.home
+package com.ichimaya.androidhackathon.detail
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -22,10 +22,10 @@ import kotlinx.android.synthetic.main.food_category_grid_item.view.*
 
 typealias ClickListener = (Int) -> Unit
 
-class GridListAdapter(
+class DetailListAdapter(
     private val onClickListener: ClickListener,
-    private val list: MutableList<Category>
-) : RecyclerView.Adapter<GridListAdapter.ViewHolder>() {
+    private val list: MutableList<Food>
+) : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
     private lateinit var context: Context
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -58,11 +58,13 @@ class GridListAdapter(
             categoryIcon.setImageResource(item.icon)
             categoryName.text = item.title
         }
+
     }
 
     override fun getItemCount() = list.size
 
-    fun getItem(position: Int): Category {
+    fun getItem(position: Int): Food {
         return list[position]
     }
+
 }

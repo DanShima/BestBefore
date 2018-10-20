@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
+    /**
+     * Use this extension function to replace existing fragment in the MainActivity
+     */
     private fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int, addToBackstack: Boolean = false) {
         supportFragmentManager.transact {
             if (addToBackstack) {
