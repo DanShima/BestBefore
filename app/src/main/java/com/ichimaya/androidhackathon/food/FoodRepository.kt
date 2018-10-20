@@ -25,16 +25,10 @@ class FoodRepository(val uuid: String) {
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                foods.postValue(dataSnapshot.children.mapNotNull {
-                                    val food = dataSnapshot.child(it.key!!)
-                                    Food(
-                                            id = food.child("id").getValue<String>(String::class.java) ?: return,
-                                            name = food.child("name").getValue<String>(String::class.java) ?: return,
-                                            expiryDate = food.child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
-                                            category = food.child("category").getValue<String>(String::class.java) ?: return,
-                                            consumeDate = food.child("consumeDate").getValue<Long>(Long::class.java)
-                                    )
-                                }.filter { it.consumeDate == null && it.category == categoryTitle })
+                                val newFoods = dataSnapshot.children.mapNotNull {
+                                    dataSnapshot.child(it.key!!).toFood()
+                                }
+                                foods.postValue(newFoods.filter { it.consumeDate == null && it.category == categoryTitle })
                             }
                         }
 
@@ -44,6 +38,16 @@ class FoodRepository(val uuid: String) {
                     })
         }
         return foods
+    }
+
+    fun DataSnapshot.toFood(): Food? {
+        return Food(
+                id = child("id").getValue<String>(String::class.java) ?: return null,
+                name = child("name").getValue<String>(String::class.java) ?: return null,
+                expiryDate = child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
+                category = child("category").getValue<String>(String::class.java) ?: return null,
+                consumeDate = child("consumeDate").getValue<Long>(Long::class.java)
+        )
     }
 
     fun registerFood(context: Context, food: Food) {
