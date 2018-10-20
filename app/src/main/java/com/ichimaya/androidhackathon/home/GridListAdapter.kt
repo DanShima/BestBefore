@@ -1,30 +1,40 @@
 package com.ichimaya.androidhackathon.home
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.support.annotation.DrawableRes
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import com.ichimaya.androidhackathon.R
+import com.ichimaya.androidhackathon.food.model.Category
 import com.ichimaya.androidhackathon.food.model.Food
+import kotlinx.android.synthetic.main.food_category_grid_item.view.*
 
 
 /**
- * Adapter for the recyclerview that displays food in categories
+ * Adapter for the RecyclerView that displays food in categories
  */
 
 typealias ClickListener = (Int) -> Unit
 
 class GridListAdapter(
-    private val onClickListener: ClickListener
+    private val onClickListener: ClickListener,
+    private val list: List<Category>
 ) : RecyclerView.Adapter<GridListAdapter.ViewHolder>() {
     private lateinit var context: Context
-    private var items: List<Food> = mutableListOf()
+    private var items: List<Category> = mutableListOf()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         init {
             itemView.setOnClickListener(this)
         }
+        val categoryIcon: ImageView = itemView.category_icon
+        val categoryName: TextView = itemView.category_name
 
         override fun onClick(view: View) {
             onClickListener(adapterPosition)
@@ -43,22 +53,26 @@ class GridListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item = items[position]
-
+        val item = list[position]
 
         viewHolder.apply {
-
+            categoryIcon.context.getNonNullDrawable(item.icon)
+            categoryName.text = item.title
         }
     }
 
     override fun getItemCount() = items.size
 
-    fun getItem(position: Int): Food {
+    fun getItem(position: Int): Category {
         return items[position]
     }
 
 
-    fun setList(list: List<Food>) {
+    fun setList(list: List<Category>) {
         items = list
+    }
+
+    private fun Context.getNonNullDrawable(@DrawableRes id: Int): Drawable {
+        return ContextCompat.getDrawable(this, id) ?: throw Exception("Missing drawable")
     }
 }

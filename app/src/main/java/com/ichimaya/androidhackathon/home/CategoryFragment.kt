@@ -10,19 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
 import kotlinx.android.synthetic.main.fragment_categories.*
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
- * A simple [Fragment] subclass.
- *
+ * Fragment that is used to show the main categories in the Home screen.
  */
 class CategoryFragment : Fragment() {
 
     private lateinit var categoryAdapter: GridListAdapter
+    private lateinit var categoryViewModel: CategoryViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -31,14 +34,13 @@ class CategoryFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         initCategoryRecyclerView()
+
         super.onActivityCreated(savedInstanceState)
     }
 
-
-
     private fun initCategoryRecyclerView() {
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_view_item_spacing)
-        categoryAdapter = GridListAdapter(this::openCatgory)
+        categoryAdapter = GridListAdapter(this::openCatgory, categoryViewModel.setupCategoryList())
         category_recyclerview.apply {
             layoutManager = GridLayoutManager(activity, 3)
             addItemDecoration(SpacesItemDecorator(spacingInPixels))
@@ -57,12 +59,9 @@ class CategoryFragment : Fragment() {
         fun newInstance(): CategoryFragment {
             return CategoryFragment().apply {
                 arguments = Bundle().apply {
-                    // nothing for now
+                    // nothing to see here, move on.
                 }
             }
         }
     }
-
-
-
 }

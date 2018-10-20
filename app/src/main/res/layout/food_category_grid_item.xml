@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- TODO: show the number of items in the fridge per category -->
         <TextView
             android:id="@+id/food_counter"
             android:layout_width="wrap_content"
@@ -25,6 +26,7 @@
             android:backgroundTint="@color/colorBadge"
             android:gravity="center"
             android:text="@null"
+            android:visibility="gone"
             android:textColor="@color/colorText"
             android:textSize="12sp"/>
 
@@ -38,6 +40,22 @@
             android:paddingTop="8dp"
             android:contentDescription="@null"
             android:src="@null" />
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/category_icon"
+            android:gravity="center"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/colorText"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
