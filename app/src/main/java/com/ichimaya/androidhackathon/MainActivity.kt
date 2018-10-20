@@ -20,10 +20,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupToolbar()
         navigationView.setOnNavigationItemSelectedListener { item ->
-            if (item.itemId == R.id.home) {
-                replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
+            when {
+                item.itemId == R.id.home -> replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
+                item.itemId == R.id.badges -> {
+                    // TODO
+                }
+                item.itemId == R.id.challenges -> {
+                    // TODO
+                }
             }
-            // TODO change the fragment
             true
         }
     }
