@@ -3,6 +3,7 @@ package com.ichimaya.androidhackathon.detail
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.recyclerview.R.attr.layoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.home.GridListAdapter
+import kotlinx.android.synthetic.main.food_detail_list_item.*
 import kotlinx.android.synthetic.main.fragment_categories.*
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
  * Fragment that is used to show the main categories in the Home screen.
@@ -37,7 +40,7 @@ class DetailFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         categoryAdapter = DetailListAdapter(this::openItem, detailViewModel.testtest())
-        category_recyclerview.apply {
+        detail_recyclerview.apply {
             layoutManager = LinearLayoutManager(activity).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }

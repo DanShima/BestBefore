@@ -11,7 +11,11 @@ import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
 import kotlinx.android.synthetic.main.fragment_categories.*
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.support.v4.app.DialogFragment
+import com.ichimaya.androidhackathon.MainActivity
+import com.ichimaya.androidhackathon.detail.DetailFragment
+import com.ichimaya.androidhackathon.food.model.Category
 
 
 /**
@@ -21,6 +25,12 @@ class CategoryFragment : Fragment() {
 
     private lateinit var categoryAdapter: GridListAdapter
     private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var onCategoryClickListener: OnCategoryClickListener
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        onCategoryClickListener = context as OnCategoryClickListener
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +54,7 @@ class CategoryFragment : Fragment() {
 
     private fun initCategoryRecyclerView() {
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_view_item_spacing)
-        categoryAdapter = GridListAdapter(this::openCatgory, categoryViewModel.setupCategoryList())
+        categoryAdapter = GridListAdapter(this::openCategory, categoryViewModel.setupCategoryList())
         category_recyclerview.apply {
             layoutManager = GridLayoutManager(activity, 3)
             addItemDecoration(SpacesItemDecorator(spacingInPixels))
@@ -52,9 +62,13 @@ class CategoryFragment : Fragment() {
         }
     }
 
-    private fun openCatgory(position: Int) {
+    private fun openCategory(position: Int) {
         val selectedCategory = categoryAdapter.getItem(position)
-        Log.d("TestBlabla", "Baka $position ${selectedCategory.title}")
+        onCategoryClickListener.onCategoryClicked(position, selectedCategory)
+    }
+
+    interface OnCategoryClickListener {
+        fun onCategoryClicked(position: Int, category: Category)
     }
 
     companion object {

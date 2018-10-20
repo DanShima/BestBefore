@@ -6,12 +6,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import com.ichimaya.androidhackathon.home.CategoryFragment
-import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.ActionBar
+import com.ichimaya.androidhackathon.detail.DetailFragment
+import com.ichimaya.androidhackathon.food.model.Category
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListener {
 
     lateinit var toolbar: ActionBar
 
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupToolbar()
+        // Show categories as default home view
+        replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
+        setupBottomNavigation()
+    }
+
+    private fun setupBottomNavigation() {
         navigationView.setOnNavigationItemSelectedListener { item ->
             when {
                 item.itemId == R.id.home -> replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
@@ -36,6 +43,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupToolbar() {
         setSupportActionBar(toolbar_main_layout)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun onCategoryClicked(position: Int, category: Category) {
+        val detailFragment = DetailFragment.newInstance() // TODO: add parameters/arguments for detail view
+        replaceFragmentInActivity(detailFragment, R.id.mainActivityFrameHolder)
     }
 
     /**
