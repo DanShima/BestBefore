@@ -44,4 +44,9 @@ enum class ExpirationState {
 }
 
 fun createFood(name: String, expiryDate: Long, category: String) =
-        Food(UUID.randomUUID().toString(), name, expiryDate, Calendar.getInstance().timeInMillis, category, null)
+        Food(id = UUID.randomUUID().toString(),
+                name = name,
+                addDate = Calendar.getInstance().timeInMillis,
+                expiryDate = expiryDate,
+                category = category,
+                consumeDate = null)
