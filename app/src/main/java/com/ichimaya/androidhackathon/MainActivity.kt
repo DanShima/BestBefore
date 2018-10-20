@@ -1,14 +1,15 @@
 package com.ichimaya.androidhackathon
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import com.ichimaya.androidhackathon.home.CategoryFragment
 import android.support.v7.app.ActionBar
+import android.support.v7.app.AppCompatActivity
+import com.ichimaya.androidhackathon.badges.BadgeFragment
 import com.ichimaya.androidhackathon.detail.DetailFragment
 import com.ichimaya.androidhackathon.food.model.Category
+import com.ichimaya.androidhackathon.home.CategoryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,9 +30,7 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListen
         navigationView.setOnNavigationItemSelectedListener { item ->
             when {
                 item.itemId == R.id.home -> replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
-                item.itemId == R.id.badges -> {
-                    // TODO
-                }
+                item.itemId == R.id.badges -> replaceFragmentInActivity(BadgeFragment.newInstance(), R.id.mainActivityFrameHolder)
                 item.itemId == R.id.challenges -> {
                     // TODO
                 }

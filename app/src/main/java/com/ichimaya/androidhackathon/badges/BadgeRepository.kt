@@ -2,11 +2,14 @@ package com.ichimaya.androidhackathon.badges
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.ichimaya.androidhackathon.badges.model.Badge
 
 
-class BadgeRepository {
+class BadgeRepository(val uuid: String) {
 
     var badges: MutableLiveData<List<Badge>> = MutableLiveData()
 
@@ -14,6 +17,7 @@ class BadgeRepository {
         if (badges.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("badges")
+                    .child(uuid)
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
@@ -39,6 +43,7 @@ class BadgeRepository {
     fun registerAchievement(badge: Badge) {
         FirebaseDatabase.getInstance()
                 .getReference("badges")
+                .child(uuid)
                 .updateChildren(mapOf(badge.id to badge))
     }
 
