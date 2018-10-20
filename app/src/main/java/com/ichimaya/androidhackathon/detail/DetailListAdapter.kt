@@ -23,10 +23,16 @@ import kotlinx.android.synthetic.main.food_detail_list_item.view.*
 typealias ClickListener = (Int) -> Unit
 
 class DetailListAdapter(
-    private val onClickListener: ClickListener,
-    private val list: MutableList<Food>
+    private val onClickListener: ClickListener
 ) : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
     private lateinit var context: Context
+
+    var foods: List<Food> = listOf()
+
+    fun updateFoods(foods: List<Food>) {
+        this.foods = foods
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         init {
@@ -53,7 +59,7 @@ class DetailListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item = list[position]
+        val item = foods[position]
 
         viewHolder.apply {
             foodIcon.setImageResource(R.drawable.ic_fruit)
@@ -62,10 +68,10 @@ class DetailListAdapter(
 
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = foods.size
 
     fun getItem(position: Int): Food {
-        return list[position]
+        return foods[position]
     }
 
 }

@@ -10,17 +10,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
+import kotlinx.android.synthetic.main.fragment_detail.*
 import com.ichimaya.androidhackathon.home.GridListAdapter
 import kotlinx.android.synthetic.main.food_detail_list_item.*
 import kotlinx.android.synthetic.main.fragment_categories.*
+import com.ichimaya.androidhackathon.food.FoodRepository
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
- * Fragment that is used to show the main categories in the Home screen.
+ * Fragment that is used to show foods for a specific category.
  */
 class DetailFragment : Fragment() {
 
-    private lateinit var categoryAdapter: DetailListAdapter
+    private lateinit var detailListAdapter: DetailListAdapter
     private lateinit var detailViewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +41,8 @@ class DetailFragment : Fragment() {
     }
 
     private fun initDetailRecyclerView() {
-        categoryAdapter = DetailListAdapter(this::openItem, detailViewModel.testtest())
+        detailListAdapter = DetailListAdapter(this::openItem)
+        detailViewModel.observeFoods().observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
         detail_recyclerview.apply {
             layoutManager = LinearLayoutManager(activity).apply {
                 orientation = LinearLayoutManager.VERTICAL
