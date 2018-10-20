@@ -21,6 +21,10 @@ class MainActivity : AppCompatActivity() {
         val categoryFragment = CategoryFragment.newInstance()
         replaceFragmentInActivity(categoryFragment, R.id.mainActivityFrameHolder)
         setupToolbar()
+        navigationView.setOnNavigationItemSelectedListener { item ->
+            // TODO change the fragment
+            true
+        }
     }
 
     private fun setupToolbar() {
