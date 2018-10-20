@@ -37,4 +37,10 @@ class FoodRepository {
         return foods
     }
 
+    fun registerFood(food: Food) {
+        FirebaseDatabase.getInstance()
+                .getReference("foods")
+                .updateChildren(mapOf(food.id to food))
+    }
+
 }
