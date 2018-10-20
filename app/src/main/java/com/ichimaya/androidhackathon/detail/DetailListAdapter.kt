@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.Category
 import com.ichimaya.androidhackathon.food.model.Food
-import kotlinx.android.synthetic.main.food_category_grid_item.view.*
+import kotlinx.android.synthetic.main.food_detail_list_item.view.*
 
 
 /**
@@ -32,8 +32,9 @@ class DetailListAdapter(
         init {
             itemView.setOnClickListener(this)
         }
-        val categoryIcon: ImageView = itemView.category_icon
-        val categoryName: TextView = itemView.category_name
+        val foodIcon: ImageView = itemView.logo_detail
+        val foodTitle: TextView = itemView.title_detail
+        val checkDone: CheckBox = itemView.checkbox_detail
 
         override fun onClick(view: View) {
             onClickListener(adapterPosition)
@@ -47,7 +48,7 @@ class DetailListAdapter(
         context = parent.context
         val inflater = LayoutInflater.from(context)
         return ViewHolder(
-            inflater.inflate(R.layout.food_category_grid_item, parent, false)
+            inflater.inflate(R.layout.food_detail_list_item, parent, false)
         )
     }
 
@@ -55,8 +56,8 @@ class DetailListAdapter(
         val item = list[position]
 
         viewHolder.apply {
-            categoryIcon.setImageResource(item.icon)
-            categoryName.text = item.title
+            foodIcon.setImageResource(R.drawable.ic_fruit)
+            foodTitle.text = item.name
         }
 
     }

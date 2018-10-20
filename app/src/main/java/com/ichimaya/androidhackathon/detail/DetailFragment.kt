@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_categories.*
  */
 class DetailFragment : Fragment() {
 
-    private lateinit var categoryAdapter: GridListAdapter
+    private lateinit var categoryAdapter: DetailListAdapter
     private lateinit var detailViewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun initDetailRecyclerView() {
-        categoryAdapter = GridListAdapter(this::openItem, )
+        categoryAdapter = DetailListAdapter(this::openItem, detailViewModel.testtest())
         category_recyclerview.apply {
             layoutManager = LinearLayoutManager(activity).apply {
                 orientation = LinearLayoutManager.VERTICAL
