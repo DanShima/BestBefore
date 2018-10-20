@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "70201026490",
+    "firebase_url": "https://best-before-53655.firebaseio.com",
+    "project_id": "best-before-53655",
+    "storage_bucket": "best-before-53655.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70201026490:android:ed41d9b477a339f2",
+        "android_client_info": {
+          "package_name": "com.ichimaya.androidhackathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70201026490-qedq00i32330pdt4gv97j3rqpi9cvver.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPR9sVBBQetmEM8i2-MrFHrQkEHh_eoRc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
