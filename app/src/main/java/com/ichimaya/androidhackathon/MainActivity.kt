@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import com.ichimaya.androidhackathon.home.CategoryFragment
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.ActionBar
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,9 +20,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val categoryFragment = CategoryFragment.newInstance()
         replaceFragmentInActivity(categoryFragment, R.id.mainActivityFrameHolder)
-        toolbar = supportActionBar!!
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
+        setupToolbar()
+    }
 
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar_main_layout)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int, addToBackstack: Boolean = false) {
