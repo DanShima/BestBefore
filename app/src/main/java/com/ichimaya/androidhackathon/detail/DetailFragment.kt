@@ -3,18 +3,12 @@ package com.ichimaya.androidhackathon.detail
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.recyclerview.R.attr.layoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
-import kotlinx.android.synthetic.main.fragment_detail.*
-import com.ichimaya.androidhackathon.home.GridListAdapter
-import kotlinx.android.synthetic.main.food_detail_list_item.*
-import kotlinx.android.synthetic.main.fragment_categories.*
-import com.ichimaya.androidhackathon.food.FoodRepository
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
@@ -24,9 +18,11 @@ class DetailFragment : Fragment() {
 
     private lateinit var detailListAdapter: DetailListAdapter
     private lateinit var detailViewModel: DetailViewModel
+    private lateinit var categoryTitle: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        categoryTitle = arguments!!.getString(CATEGORY_TITLE)!! // should fail spectacularly if argument is not provided
         detailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
     }
 
@@ -42,7 +38,7 @@ class DetailFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         detailListAdapter = DetailListAdapter(this::openItem)
-        detailViewModel.observeFoods().observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
+        detailViewModel.observeFoods(categoryTitle).observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
         detail_recyclerview.apply {
             adapter = detailListAdapter
             layoutManager = LinearLayoutManager(activity).apply {
@@ -57,13 +53,13 @@ class DetailFragment : Fragment() {
     }
 
     companion object {
-        val TAG: String = DetailFragment::class.java.simpleName
+        const val CATEGORY_TITLE = "category-title"
 
         @JvmStatic
-        fun newInstance(): DetailFragment {
+        fun newInstance(categoryTitle: String): DetailFragment {
             return DetailFragment().apply {
                 arguments = Bundle().apply {
-                    // nothing to see here, move on.
+                    putString(CATEGORY_TITLE, categoryTitle)
                 }
             }
         }

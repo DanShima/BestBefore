@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListen
     }
 
     override fun onCategoryClicked(position: Int, category: Category) {
-        val detailFragment = DetailFragment.newInstance() // TODO: add parameters/arguments for detail view
+        val detailFragment = DetailFragment.newInstance(category.title)
         replaceFragmentInActivity(detailFragment, R.id.mainActivityFrameHolder)
     }
 

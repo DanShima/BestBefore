@@ -14,7 +14,7 @@ class FoodRepository {
 
     var foods: MutableLiveData<List<Food>> = MutableLiveData()
 
-    fun observeFoods(): LiveData<List<Food>> {
+    fun observeFoods(categoryTitle: String): LiveData<List<Food>> {
         if (foods.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("foods")
@@ -30,7 +30,7 @@ class FoodRepository {
                                             category = food.child("category").getValue<String>(String::class.java) ?: return,
                                             consumeDate = food.child("consumeDate").getValue<Long>(Long::class.java)
                                     )
-                                })
+                                }.filter { it.category == categoryTitle })
                             }
                         }
 
