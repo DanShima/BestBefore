@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.ichimaya.androidhackathon.food.model.Food
+import java.util.*
 
 
 class FoodRepository {
@@ -42,6 +43,10 @@ class FoodRepository {
         FirebaseDatabase.getInstance()
                 .getReference("foods")
                 .updateChildren(mapOf(food.id to food))
+    }
+
+    fun markFoodAsConsumed(food: Food) {
+        registerFood(food.copy(consumeDate = Calendar.getInstance().timeInMillis)) // set consumeDate to now
     }
 
 }
