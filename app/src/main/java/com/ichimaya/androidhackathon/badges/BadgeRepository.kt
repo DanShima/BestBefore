@@ -1,30 +1,28 @@
-package com.ichimaya.androidhackathon.food
+package com.ichimaya.androidhackathon.badges
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.google.firebase.database.*
-import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.badges.model.Badge
 
 
-class FoodRepository {
+class BadgeRepository {
 
-    var foods: MutableLiveData<List<Food>> = MutableLiveData()
+    var badges: MutableLiveData<List<Badge>> = MutableLiveData()
 
-    fun observeFoods(): LiveData<List<Food>> {
-        if (foods.value == null) {
+    fun observeBadges(): LiveData<List<Badge>> {
+        if (badges.value == null) {
             FirebaseDatabase.getInstance()
-                    .getReference("foods")
+                    .getReference("badges")
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                foods.postValue(dataSnapshot.children.mapNotNull {
+                                badges.postValue(dataSnapshot.children.mapNotNull {
                                     val food = dataSnapshot.child(it.key!!)
-                                    Food(
+                                    Badge(
                                             id = food.child("id").getValue<String>(String::class.java) ?: return,
                                             name = food.child("name").getValue<String>(String::class.java) ?: return,
-                                            expiryDate = food.child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
-                                            category = food.child("category").getValue<String>(String::class.java) ?: return,
-                                            consumeDate = food.child("consumeDate").getValue<Long>(Long::class.java)
+                                            achieveDate = food.child("achieveDate").getValue<Long>(Long::class.java) ?: 0L
                                     )
                                 })
                             }
@@ -35,13 +33,13 @@ class FoodRepository {
                         }
                     })
         }
-        return foods
+        return badges
     }
 
-    fun registerFood(food: Food) {
+    fun registerAchievement(badge: Badge) {
         FirebaseDatabase.getInstance()
-                .getReference("foods")
-                .updateChildren(mapOf(food.id to food))
+                .getReference("badges")
+                .updateChildren(mapOf(badge.id to badge))
     }
 
 }
