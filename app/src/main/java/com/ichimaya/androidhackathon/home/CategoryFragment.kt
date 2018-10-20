@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
 import kotlinx.android.synthetic.main.fragment_categories.*
 import android.arch.lifecycle.ViewModelProviders
+import android.support.v4.app.DialogFragment
 
 
 /**
@@ -35,6 +36,7 @@ class CategoryFragment : Fragment() {
         initCategoryRecyclerView()
         fab_add.setOnClickListener {
             val newFoodDialogFragment = NewFoodDialogFragment()
+            newFoodDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
             newFoodDialogFragment.show(fragmentManager, "NewFoodDialogFragment_Tag")
         }
         super.onViewCreated(view, savedInstanceState)

@@ -23,7 +23,7 @@ class NewFoodDialogFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_dialog_new_food, container)
 
-        this.dialog.setTitle("Add New Food Item")
+        dialog.setTitle("Add New Food Item")
 
         val myCalendar = Calendar.getInstance()
 
@@ -44,5 +44,10 @@ class NewFoodDialogFragment : DialogFragment() {
         }
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        this.dialog.setTitle("Add New Food Item")
     }
 }
