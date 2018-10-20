@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.FoodRepository
-import kotlinx.android.synthetic.main.fragment_categories.*
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
  * Fragment that is used to show foods for a specific category.
@@ -38,7 +38,7 @@ class DetailFragment : Fragment() {
     private fun initDetailRecyclerView() {
         detailListAdapter = DetailListAdapter(this::openItem)
         FoodRepository().observeFoods().observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
-        category_recyclerview.apply {
+        detail_recyclerview.apply {
             layoutManager = LinearLayoutManager(activity).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
