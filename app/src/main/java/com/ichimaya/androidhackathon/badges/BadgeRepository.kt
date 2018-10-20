@@ -7,11 +7,44 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ichimaya.androidhackathon.badges.model.Badge
+import com.ichimaya.androidhackathon.badges.model.fiveDayStreak
+import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.food.model.isConsumed
+import com.ichimaya.androidhackathon.food.model.isExpired
+import com.ichimaya.androidhackathon.food.model.toFood
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import java.util.*
 
 
 class BadgeRepository(val uuid: String) {
 
     var badges: MutableLiveData<List<Badge>> = MutableLiveData()
+
+    fun updateBadges() {
+        FirebaseDatabase.getInstance()
+                .getReference("foods")
+                .child(uuid)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            val newFoods = dataSnapshot.children.mapNotNull {
+                                dataSnapshot.child(it.key!!).toFood()
+                            }
+                            val fiveDaysAgo = LocalDateTime.now()
+                                    .minusDays(5)
+                            if (!foodsExpiredPastFiveDays(newFoods, fiveDaysAgo)) {
+                                registerAchievement(fiveDayStreak(Calendar.getInstance().timeInMillis))
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // TODO
+                    }
+                })
+    }
 
     fun observeBadges(): LiveData<List<Badge>> {
         if (badges.value == null) {
@@ -45,6 +78,13 @@ class BadgeRepository(val uuid: String) {
                 .getReference("badges")
                 .child(uuid)
                 .updateChildren(mapOf(badge.id to badge))
+    }
+
+    private fun foodsExpiredPastFiveDays(foods: List<Food>, fiveDaysAgo: LocalDateTime?): Boolean {
+        return foods.any {
+            val expiry = LocalDateTime.ofInstant(Instant.ofEpochMilli(it.expiryDate), ZoneId.systemDefault())
+            !it.isConsumed() && it.isExpired() && expiry.isAfter(fiveDaysAgo)
+        }
     }
 
 }

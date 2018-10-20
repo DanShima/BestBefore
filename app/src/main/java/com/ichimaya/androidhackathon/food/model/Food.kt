@@ -1,5 +1,6 @@
 package com.ichimaya.androidhackathon.food.model
 
+import com.google.firebase.database.DataSnapshot
 import java.util.*
 
 data class Food(val id: String,
@@ -10,6 +11,7 @@ data class Food(val id: String,
 }
 
 fun Food.isConsumed() = consumeDate != null
+fun Food.isExpired() = expirationState() == ExpirationState.EXPIRED
 
 fun Food.expirationState(): ExpirationState {
     val timeLeft = expiryDate - Calendar.getInstance().timeInMillis
@@ -21,6 +23,16 @@ fun Food.expirationState(): ExpirationState {
     }
 
     return ExpirationState.NOT_EXPIRED
+}
+
+fun DataSnapshot.toFood(): Food? {
+    return Food(
+            id = child("id").getValue<String>(String::class.java) ?: return null,
+            name = child("name").getValue<String>(String::class.java) ?: return null,
+            expiryDate = child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
+            category = child("category").getValue<String>(String::class.java) ?: return null,
+            consumeDate = child("consumeDate").getValue<Long>(Long::class.java)
+    )
 }
 
 enum class ExpirationState {

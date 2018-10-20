@@ -8,6 +8,8 @@ import com.ichimaya.androidhackathon.user.UserDetailsService
 
 class BadgeViewModel : ViewModel() {
     fun observeBadges(context: Context): LiveData<List<Badge>> {
-        return BadgeRepository(UserDetailsService().getUUID(context)).observeBadges()
+        val badgeRepository = BadgeRepository(UserDetailsService().getUUID(context))
+        badgeRepository.updateBadges()
+        return badgeRepository.observeBadges()
     }
 }

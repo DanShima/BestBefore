@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
+import com.ichimaya.androidhackathon.food.model.toFood
 import com.ichimaya.androidhackathon.notifications.NotificationHandler
 import java.util.*
 
@@ -38,16 +39,6 @@ class FoodRepository(val uuid: String) {
                     })
         }
         return foods
-    }
-
-    fun DataSnapshot.toFood(): Food? {
-        return Food(
-                id = child("id").getValue<String>(String::class.java) ?: return null,
-                name = child("name").getValue<String>(String::class.java) ?: return null,
-                expiryDate = child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
-                category = child("category").getValue<String>(String::class.java) ?: return null,
-                consumeDate = child("consumeDate").getValue<Long>(Long::class.java)
-        )
     }
 
     fun registerFood(context: Context, food: Food) {
