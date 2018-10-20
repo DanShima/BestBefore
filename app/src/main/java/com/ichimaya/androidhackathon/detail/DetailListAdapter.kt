@@ -41,6 +41,7 @@ class DetailListAdapter(
 
         fun bind() {
             checkDone.setOnCheckedChangeListener(this)
+            checkDone.isChecked = false
             itemView.setOnClickListener(this)
         }
 
@@ -61,7 +62,7 @@ class DetailListAdapter(
         val inflater = LayoutInflater.from(context)
         return ViewHolder(
             inflater.inflate(R.layout.food_detail_list_item, parent, false)
-        ).apply { bind() }
+        )
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
@@ -70,7 +71,7 @@ class DetailListAdapter(
         viewHolder.apply {
             foodIcon.setImageResource(R.drawable.ic_fruit)
             foodTitle.text = item.name
-        }
+        }.bind()
 
     }
 
