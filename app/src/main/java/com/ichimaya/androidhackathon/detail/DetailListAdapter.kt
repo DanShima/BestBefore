@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.ichimaya.androidhackathon.R
+import com.ichimaya.androidhackathon.food.model.Category
 import com.ichimaya.androidhackathon.food.model.Food
 import kotlinx.android.synthetic.main.food_detail_list_item.view.*
 
@@ -19,11 +20,13 @@ import kotlinx.android.synthetic.main.food_detail_list_item.view.*
  */
 
 typealias ClickListener = (Int) -> Unit
+
 typealias CheckListener = (Boolean, Food) -> Unit
 
 class DetailListAdapter(
-    private val onClickListener: ClickListener,
-    private val onCheckListener: CheckListener
+        private val categoryTitle: String,
+        private val onClickListener: ClickListener,
+        private val onCheckListener: CheckListener
 ) : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
     private lateinit var context: Context
 
@@ -55,13 +58,13 @@ class DetailListAdapter(
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+            parent: ViewGroup,
+            viewType: Int
     ): ViewHolder {
         context = parent.context
         val inflater = LayoutInflater.from(context)
         return ViewHolder(
-            inflater.inflate(R.layout.food_detail_list_item, parent, false)
+                inflater.inflate(R.layout.food_detail_list_item, parent, false)
         )
     }
 
@@ -69,7 +72,19 @@ class DetailListAdapter(
         val item = foods[position]
 
         viewHolder.apply {
-            foodIcon.setImageResource(R.drawable.ic_fruit)
+            foodIcon.setImageResource(
+                    when (categoryTitle) { // TODO make an enum or sealed class for this
+                        "Fruit" -> R.drawable.ic_fruit
+                        "Vegetable" -> R.drawable.ic_veggie
+                        "Fish" -> R.drawable.ic_seafood
+                        "Meat" -> R.drawable.ic_meat
+                        "Drink" -> R.drawable.ic_milk
+                        "Bread" -> R.drawable.ic_bread
+                        "Dairy" -> R.drawable.ic_cheese
+                        "Meal" -> R.drawable.ic_meal
+                        "Unknown" -> R.drawable.ic_unknown_food
+                        else -> R.drawable.ic_unknown_food
+                    })
             foodTitle.text = item.name
         }.bind()
 
