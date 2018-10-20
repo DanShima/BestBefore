@@ -11,6 +11,7 @@ import android.widget.*
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.FoodRepository
 import com.ichimaya.androidhackathon.food.model.createFood
+import com.ichimaya.androidhackathon.user.UserDetailsService
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -86,8 +87,8 @@ class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListen
         val dateString = this.dialog.findViewById<EditText>(R.id.expiration_date).text.toString()
         val expiraryDate = sdf.parse(dateString)
         val food = createFood(name, expiraryDate.time, selectedCategory)
-        FoodRepository().registerFood(context!!, food)
-        Toast.makeText(context, "Added " + name + "!", Toast.LENGTH_SHORT).show()
+        FoodRepository(UserDetailsService().getUUID(context!!)).registerFood(context!!, food)
+        Toast.makeText(context, "Added $name!", Toast.LENGTH_SHORT).show()
         dismiss()
     }
 }

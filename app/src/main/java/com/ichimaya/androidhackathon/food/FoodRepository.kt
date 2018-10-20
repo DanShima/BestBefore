@@ -3,14 +3,17 @@ package com.ichimaya.androidhackathon.food
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.notifications.NotificationHandler
 import java.util.*
 
 
-class FoodRepository {
+class FoodRepository(val uuid: String) {
 
     var foods: MutableLiveData<List<Food>> = MutableLiveData()
 
@@ -18,6 +21,7 @@ class FoodRepository {
         if (foods.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("foods")
+                    .child(uuid)
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
@@ -50,6 +54,7 @@ class FoodRepository {
         }
         FirebaseDatabase.getInstance()
                 .getReference("foods")
+                .child(uuid)
                 .updateChildren(mapOf(food.id to food))
     }
 

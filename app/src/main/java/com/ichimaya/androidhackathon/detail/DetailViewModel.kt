@@ -5,13 +5,14 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.ichimaya.androidhackathon.food.FoodRepository
 import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.user.UserDetailsService
 
 class DetailViewModel: ViewModel() {
-    fun observeFoods(categoryTitle: String): LiveData<List<Food>> {
-        return FoodRepository().observeFoods(categoryTitle)
+    fun observeFoods(context: Context, categoryTitle: String): LiveData<List<Food>> {
+        return FoodRepository(UserDetailsService().getUUID(context)).observeFoods(categoryTitle)
     }
 
     fun markAsConsumed(context: Context, food: Food) {
-        FoodRepository().markFoodAsConsumed(context, food)
+        FoodRepository(UserDetailsService().getUUID(context)).markFoodAsConsumed(context, food)
     }
 }
