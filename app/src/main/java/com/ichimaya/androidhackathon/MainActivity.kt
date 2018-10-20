@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import com.ichimaya.androidhackathon.badges.BadgeFragment
+import com.ichimaya.androidhackathon.challenges.ChallengeFragment
 import com.ichimaya.androidhackathon.detail.DetailFragment
 import com.ichimaya.androidhackathon.food.model.Category
 import com.ichimaya.androidhackathon.home.CategoryFragment
@@ -31,9 +32,7 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListen
             when {
                 item.itemId == R.id.home -> replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
                 item.itemId == R.id.badges -> replaceFragmentInActivity(BadgeFragment.newInstance(), R.id.mainActivityFrameHolder)
-                item.itemId == R.id.challenges -> {
-                    // TODO
-                }
+                item.itemId == R.id.challenges -> replaceFragmentInActivity(ChallengeFragment.newInstance(), R.id.mainActivityFrameHolder)
             }
             true
         }

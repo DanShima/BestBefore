@@ -44,6 +44,7 @@ class ChallengeFragment : Fragment() {
             }
             setHasFixedSize(true)
         }
+        challengeListAdapter.updateChallenges(challengeViewModel.setupChallengeList())
     }
 
     private fun startChallenge(position: Int) {

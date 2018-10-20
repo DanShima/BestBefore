@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Food
@@ -21,15 +22,16 @@ class ChallengeListAdapter(
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
     private lateinit var context: Context
 
-    var foods: List<Food> = listOf()
+    var challenges: List<Challenge> = listOf()
 
-    fun updateFoods(foods: List<Food>) {
-        this.foods = foods
+    fun updateChallenges(challenges: List<Challenge>) {
+        this.challenges = challenges
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val title: TextView = itemView.food_challenge_item
+        val title: TextView = itemView.challenge_title
+        val icon: ImageView = itemView.challenge_badge
         val description: TextView = itemView.challenge_subtext
 
         override fun onClick(view: View) {
@@ -49,19 +51,21 @@ class ChallengeListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item = foods[position]
+        val item = challenges[position]
 
         viewHolder.apply {
-
+            icon.setImageResource(item.badge)
+            title.text = item.title
+            description.text = item.description
         }
 
 
     }
 
-    override fun getItemCount() = foods.size
+    override fun getItemCount() = challenges.size
 
-    fun getItem(position: Int): Food {
-        return foods[position]
+    fun getItem(position: Int): Challenge {
+        return challenges[position]
     }
 
 }

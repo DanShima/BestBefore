@@ -46,7 +46,6 @@ class CategoryViewModel: ViewModel() {
         MutableList<Category> {
         val option = Category(icon, title)
         categoryList.add(option)
-        Log.d("List", "$categoryList")
         return categoryList
     }
 }

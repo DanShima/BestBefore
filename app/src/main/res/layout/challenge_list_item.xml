@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/colorSurface"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/challenge_badge"
+        android:layout_margin="10dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_fruits"/>
 
     <TextView
-        android:id="@+id/food_challenge_item"
+        android:id="@+id/challenge_title"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:layout_margin="8dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="8dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/challenge_badge"
         android:text="@string/app_name"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/colorText"
-        android:gravity="start|center"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_fruit" />
+        android:textColor="@color/colorText" />
     <TextView
         android:id="@+id/challenge_subtext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="80dp"
-        android:paddingEnd="8dp"
+        android:layout_height="50dp"
+        android:layout_toEndOf="@id/challenge_badge"
+        android:layout_below="@id/challenge_title"
+        android:layout_marginStart="8dp"
         android:textSize="12sp"
         android:textColor="@color/colorText"
         android:text="@string/app_name"/>
 
-</LinearLayout>
+</RelativeLayout>
