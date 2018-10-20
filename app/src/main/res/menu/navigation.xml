@@ -13,5 +13,5 @@
     <item
         android:id="@+id/badges"
         android:icon="@drawable/ic_star_black_24dp"
-        android:title="Badges"/>
+        android:title="Achievements"/>
 </menu>
