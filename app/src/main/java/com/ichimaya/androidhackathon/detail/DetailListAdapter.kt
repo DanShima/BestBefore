@@ -1,16 +1,12 @@
 package com.ichimaya.androidhackathon.detail
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.Category
 import com.ichimaya.androidhackathon.food.model.Food
 import kotlinx.android.synthetic.main.food_detail_list_item.view.*
 
@@ -42,7 +38,7 @@ class DetailListAdapter(
         val foodTitle: TextView = itemView.title_detail
         val checkDone: CheckBox = itemView.checkbox_detail
 
-        fun bind() {
+        fun bindListeners() {
             checkDone.setOnCheckedChangeListener(this)
             checkDone.isChecked = false
             itemView.setOnClickListener(this)
@@ -86,7 +82,7 @@ class DetailListAdapter(
                         else -> R.drawable.ic_unknown_food
                     })
             foodTitle.text = item.name
-        }.bind()
+        }.bindListeners()
 
     }
 
