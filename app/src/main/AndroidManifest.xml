@@ -3,6 +3,7 @@
     package="com.ichimaya.androidhackathon">
 
     <application
+        android:name=".BestBeforeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
