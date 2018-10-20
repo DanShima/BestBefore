@@ -53,6 +53,7 @@ class DetailFragment : Fragment() {
     private fun markItemAsConsumed(checked: Boolean, food: Food) {
         if (checked) {
             Toast.makeText(activity, "Awesomesauce! You consumed ${food.name}", Toast.LENGTH_LONG).show()
+            detailViewModel.markAsConsumed(activity!!, food)
         }
     }
 

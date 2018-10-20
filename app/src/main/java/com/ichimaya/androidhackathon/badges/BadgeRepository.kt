@@ -14,7 +14,7 @@ class BadgeRepository {
         if (badges.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("badges")
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                    .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 badges.postValue(dataSnapshot.children.mapNotNull {

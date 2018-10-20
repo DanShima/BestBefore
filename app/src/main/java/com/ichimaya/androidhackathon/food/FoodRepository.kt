@@ -7,6 +7,7 @@ import com.google.firebase.database.*
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.notifications.NotificationHandler
+import timber.log.Timber
 import java.util.*
 
 
@@ -18,7 +19,7 @@ class FoodRepository {
         if (foods.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("foods")
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                    .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 foods.postValue(dataSnapshot.children.mapNotNull {
@@ -30,7 +31,7 @@ class FoodRepository {
                                             category = food.child("category").getValue<String>(String::class.java) ?: return,
                                             consumeDate = food.child("consumeDate").getValue<Long>(Long::class.java)
                                     )
-                                }.filter { it.category == categoryTitle })
+                                }.filter { it.consumeDate == null && it.category == categoryTitle })
                             }
                         }
 
