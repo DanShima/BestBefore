@@ -48,6 +48,7 @@ class ChallengeFragment : Fragment() {
     }
 
     private fun startChallenge(position: Int) {
+        // TODO: add a dialog here
         Log.d("TestMe", "$position")
     }
 
