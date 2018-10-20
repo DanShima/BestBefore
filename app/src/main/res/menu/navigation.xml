@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_songs"
+        android:id="@+id/home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home"/>
 
     <item
-        android:id="@+id/navigation_albums"
+        android:id="@+id/challenges"
         android:icon="@drawable/ic_assessment_black_24dp"
         android:title="Challenges"/>
 
     <item
-        android:id="@+id/navigation_artists"
+        android:id="@+id/badges"
         android:icon="@drawable/ic_star_black_24dp"
         android:title="Badges"/>
 </menu>

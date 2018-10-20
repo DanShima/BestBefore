@@ -18,10 +18,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val categoryFragment = CategoryFragment.newInstance()
-        replaceFragmentInActivity(categoryFragment, R.id.mainActivityFrameHolder)
         setupToolbar()
         navigationView.setOnNavigationItemSelectedListener { item ->
+            if (item.itemId == R.id.home) {
+                replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
+            }
             // TODO change the fragment
             true
         }
