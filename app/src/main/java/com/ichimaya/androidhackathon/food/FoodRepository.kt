@@ -3,12 +3,13 @@ package com.ichimaya.androidhackathon.food
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.notifications.NotificationHandler
-import com.ichimaya.androidhackathon.user.UserDetailsService
-import timber.log.Timber
 import java.util.*
 
 
