@@ -32,7 +32,7 @@ class DetailListAdapter(
         private val categoryTitle: String,
         private val onClickListener: ClickListener,
         private val onCheckListener: CheckListener
-) : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var context: Context
 
     var foods: List<Food> = listOf()
@@ -42,7 +42,7 @@ class DetailListAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
         val foodIcon: ImageView = itemView.logo_detail
         val foodTitle: TextView = itemView.title_detail
         val expirationDate: TextView = itemView.expiration_date
@@ -64,59 +64,80 @@ class DetailListAdapter(
         }
     }
 
+    inner class SimpleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-    ): ViewHolder {
+    ): RecyclerView.ViewHolder {
         context = parent.context
         val inflater = LayoutInflater.from(context)
-        return ViewHolder(
-                inflater.inflate(R.layout.food_detail_list_item, parent, false)
-        )
+        return if (viewType == TYPE_FOOD) {
+            FoodViewHolder(
+                    inflater.inflate(R.layout.food_detail_list_item, parent, false)
+            )
+        } else {
+            SimpleViewHolder(
+                    inflater.inflate(R.layout.food_detail_empty_state, parent, false)
+            )
+        }
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item = foods[position]
-
-        viewHolder.apply {
-            foodIcon.setImageResource(
-                    when (categoryTitle) { // TODO make an enum or sealed class for this
-                        "Fruit" -> R.drawable.ic_fruit
-                        "Vegetable" -> R.drawable.ic_veggie
-                        "Fish" -> R.drawable.ic_seafood
-                        "Meat" -> R.drawable.ic_meat
-                        "Drink" -> R.drawable.ic_milk
-                        "Bread" -> R.drawable.ic_bread
-                        "Dairy" -> R.drawable.ic_cheese
-                        "Meal" -> R.drawable.ic_meal
-                        "Unknown" -> R.drawable.ic_unknown_food
-                        else -> R.drawable.ic_unknown_food
-                    })
-            foodTitle.text = item.name
-            when (item.expirationState()) {
-                ExpirationState.SOON -> {
-                    expirationWarning.visibility = View.VISIBLE
-                    expirationWarning.text = context.getString(R.string.expiredSoon)
-                }
-                ExpirationState.EXPIRED -> {
-                    expirationWarning.visibility = View.VISIBLE
-                    expirationWarning.text = context.getString(R.string.expired)
-                }
-                ExpirationState.NOT_EXPIRED -> expirationWarning.visibility = View.GONE
-            }
-
-            val expirationDateString = LocalDateTime.ofInstant(Instant.ofEpochMilli(item.expiryDate), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_DATE)
-            expirationDate.text = "Expires $expirationDateString"
-        }.bindListeners()
-
+    override fun getItemViewType(position: Int): Int {
+        if (foods.isEmpty()) {
+            return TYPE_EMPTY_STATE
+        }
+        return TYPE_FOOD
     }
 
-    override fun getItemCount() = foods.size
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        val viewType = getItemViewType(position)
+        if (viewType == TYPE_FOOD && viewHolder is FoodViewHolder) {
+            val item = foods[position]
+
+            viewHolder.apply {
+                foodIcon.setImageResource(
+                        when (categoryTitle) { // TODO make an enum or sealed class for this
+                            "Fruit" -> R.drawable.ic_fruit
+                            "Vegetable" -> R.drawable.ic_veggie
+                            "Fish" -> R.drawable.ic_seafood
+                            "Meat" -> R.drawable.ic_meat
+                            "Drink" -> R.drawable.ic_milk
+                            "Bread" -> R.drawable.ic_bread
+                            "Dairy" -> R.drawable.ic_cheese
+                            "Meal" -> R.drawable.ic_meal
+                            "Unknown" -> R.drawable.ic_unknown_food
+                            else -> R.drawable.ic_unknown_food
+                        })
+                foodTitle.text = item.name
+                when (item.expirationState()) {
+                    ExpirationState.SOON -> {
+                        expirationWarning.visibility = View.VISIBLE
+                        expirationWarning.text = context.getString(R.string.expiredSoon)
+                    }
+                    ExpirationState.EXPIRED -> {
+                        expirationWarning.visibility = View.VISIBLE
+                        expirationWarning.text = context.getString(R.string.expired)
+                    }
+                    ExpirationState.NOT_EXPIRED -> expirationWarning.visibility = View.GONE
+                }
+
+                val expirationDateString = LocalDateTime.ofInstant(Instant.ofEpochMilli(item.expiryDate), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_DATE)
+                expirationDate.text = "Expires $expirationDateString"
+            }.bindListeners()
+        }
+    }
+
+    override fun getItemCount() = if (foods.isEmpty()) 1 else foods.size
 
     fun getItem(position: Int): Food {
         return foods[position]
     }
 
+    companion object {
+        const val TYPE_EMPTY_STATE = 1
+        const val TYPE_FOOD = 2
+    }
 }
 
 
