@@ -34,6 +34,9 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initCategoryRecyclerView()
+        fab_add.setOnClickListener {
+            Log.d("TestBlabla", "ADD NEW ITEM HERE")
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 
