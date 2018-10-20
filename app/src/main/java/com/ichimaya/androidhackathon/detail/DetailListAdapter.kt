@@ -14,6 +14,10 @@ import com.ichimaya.androidhackathon.food.model.ExpirationState
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.expirationState
 import kotlinx.android.synthetic.main.food_detail_list_item.view.*
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
 
 
 /**
@@ -41,6 +45,7 @@ class DetailListAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
         val foodIcon: ImageView = itemView.logo_detail
         val foodTitle: TextView = itemView.title_detail
+        val expirationDate: TextView = itemView.expiration_date
         val checkDone: CheckBox = itemView.checkbox_detail
         val expirationWarning: TextView = itemView.expiration_warning
 
@@ -99,6 +104,9 @@ class DetailListAdapter(
                 }
                 ExpirationState.NOT_EXPIRED -> expirationWarning.visibility = View.GONE
             }
+
+            val expirationDateString = LocalDateTime.ofInstant(Instant.ofEpochMilli(item.expiryDate), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_DATE)
+            expirationDate.text = "Expires $expirationDateString"
         }.bindListeners()
 
     }
