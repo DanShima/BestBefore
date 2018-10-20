@@ -14,10 +14,25 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/food_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Enter Product Name" />
     </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:id="@+id/category_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"/>
+
+    <Spinner
+        android:id="@+id/category_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         style="@style/TextAppearance.AppCompat.Caption"
@@ -28,7 +43,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="4dp"/>
 
-    <!-- TODO: Open DatePicker onClick -->
     <EditText
         style="@style/TextAppearance.AppCompat.Subhead"
         android:id="@+id/expiration_date"

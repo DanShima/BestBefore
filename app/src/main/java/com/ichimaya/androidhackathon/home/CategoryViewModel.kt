@@ -31,6 +31,10 @@ class CategoryViewModel: ViewModel() {
         "Meal",
         "Unknown")
 
+    fun getCategories(): Array<String> {
+        return categoryTitles
+    }
+
     fun setupCategoryList(): MutableList<Category> {
         for (i in categoryIcons.indices) {
             addOptionsToList(categoryIcons[i], categoryTitles[i])
