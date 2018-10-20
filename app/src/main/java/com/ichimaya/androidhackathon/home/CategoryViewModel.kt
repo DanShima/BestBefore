@@ -1,6 +1,7 @@
 package com.ichimaya.androidhackathon.home
 
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Category
 
@@ -30,15 +31,16 @@ class CategoryViewModel: ViewModel() {
 
     fun setupCategoryList(): MutableList<Category> {
         for (i in categoryIcons.indices) {
-            addMiscOptionsToList(categoryIcons[i], categoryTitles[i])
+            addOptionsToList(categoryIcons[i], categoryTitles[i])
         }
         return categoryList
     }
 
-    private fun addMiscOptionsToList(icon: Int, title: String):
+    private fun addOptionsToList(icon: Int, title: String):
         MutableList<Category> {
-        val miscOption = Category(icon, title)
-        categoryList.add(miscOption)
+        val option = Category(icon, title)
+        categoryList.add(option)
+        Log.d("List", "$categoryList")
         return categoryList
     }
 }

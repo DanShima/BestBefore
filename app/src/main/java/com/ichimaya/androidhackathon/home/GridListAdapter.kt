@@ -24,7 +24,7 @@ typealias ClickListener = (Int) -> Unit
 
 class GridListAdapter(
     private val onClickListener: ClickListener,
-    private val list: List<Category>
+    private val list: MutableList<Category>
 ) : RecyclerView.Adapter<GridListAdapter.ViewHolder>() {
     private lateinit var context: Context
     private var items: List<Category> = mutableListOf()
@@ -56,9 +56,10 @@ class GridListAdapter(
         val item = list[position]
 
         viewHolder.apply {
-            categoryIcon.context.getNonNullDrawable(item.icon)
+            categoryIcon.setImageResource(item.icon)
             categoryName.text = item.title
         }
+
     }
 
     override fun getItemCount() = items.size
@@ -68,7 +69,7 @@ class GridListAdapter(
     }
 
 
-    fun setList(list: List<Category>) {
+    fun setList(list: MutableList<Category>) {
         items = list
     }
 

@@ -25,6 +25,7 @@ class CategoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
+        categoryViewModel.setupCategoryList()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +33,10 @@ class CategoryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initCategoryRecyclerView()
-
-        super.onActivityCreated(savedInstanceState)
+        categoryAdapter.setList(categoryViewModel.setupCategoryList())
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun initCategoryRecyclerView() {
