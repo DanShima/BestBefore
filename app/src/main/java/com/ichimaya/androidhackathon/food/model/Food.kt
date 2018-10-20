@@ -5,6 +5,6 @@ data class Food(val id: String,
                 val expiryDate: Long, // expiry date in milliseconds
                 val category: String,
                 val consumeDate: Long?) { // consume date in milliseconds
-
-    fun isConsumed() = consumeDate != null
 }
+
+fun Food.isConsumed() = consumeDate != null
