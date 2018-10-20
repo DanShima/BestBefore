@@ -18,9 +18,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val categoryFragment = CategoryFragment.newInstance()
-        replaceFragmentInActivity(categoryFragment, R.id.mainActivityFrameHolder)
         setupToolbar()
+        navigationView.setOnNavigationItemSelectedListener { item ->
+            when {
+                item.itemId == R.id.home -> replaceFragmentInActivity(CategoryFragment.newInstance(), R.id.mainActivityFrameHolder)
+                item.itemId == R.id.badges -> {
+                    // TODO
+                }
+                item.itemId == R.id.challenges -> {
+                    // TODO
+                }
+            }
+            true
+        }
     }
 
     private fun setupToolbar() {
