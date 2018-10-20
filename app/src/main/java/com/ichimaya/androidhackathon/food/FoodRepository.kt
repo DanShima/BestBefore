@@ -2,8 +2,11 @@ package com.ichimaya.androidhackathon.food
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import com.google.firebase.database.*
 import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.food.model.isConsumed
+import com.ichimaya.androidhackathon.notifications.NotificationHandler
 import java.util.*
 
 
@@ -39,14 +42,19 @@ class FoodRepository {
         return foods
     }
 
-    fun registerFood(food: Food) {
+    fun registerFood(context: Context, food: Food) {
+        if (food.isConsumed()) {
+            NotificationHandler().cancelNotification(context, food)
+        } else {
+            NotificationHandler().scheduleNotification(context, food)
+        }
         FirebaseDatabase.getInstance()
                 .getReference("foods")
                 .updateChildren(mapOf(food.id to food))
     }
 
-    fun markFoodAsConsumed(food: Food) {
-        registerFood(food.copy(consumeDate = Calendar.getInstance().timeInMillis)) // set consumeDate to now
+    fun markFoodAsConsumed(context: Context, food: Food) {
+        registerFood(context, food.copy(consumeDate = Calendar.getInstance().timeInMillis)) // set consumeDate to now
     }
 
     fun deleteFood(foodId: String) {
