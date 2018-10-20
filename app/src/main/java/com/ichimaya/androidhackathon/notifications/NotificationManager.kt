@@ -23,11 +23,24 @@ class NotificationHandler {
                              timeBefore: Int = TWO_HOURS) {
         val name = "Best before"
         val channel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT)
-        val notificationId = 1
 
         val notificationManager: NotificationManager = getSystemService(context, NotificationManager::class.java)!!
         notificationManager.createNotificationChannel(channel)
 
+        val pendingIntent = getPendingIntent(context, food)
+
+        val notificationTime = food.expiryDate - timeBefore
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent)
+    }
+
+    fun cancelNotification(context: Context, food: Food) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(getPendingIntent(context, food))
+    }
+
+    private fun getPendingIntent(context: Context, food: Food): PendingIntent? {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("${food.name} is about to expire!")
                 .setContentText("Eat it before it goes bad.")
@@ -36,20 +49,15 @@ class NotificationHandler {
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 
         val intent = Intent(context, MainActivity::class.java)
+        val notificationId = food.id.hashCode()
         val activity = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         builder.setContentIntent(activity)
 
         val notification = builder.build()
-
         val notificationIntent = Intent(context, NotificationPublisher::class.java)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification)
-        val pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT)
-
-        val notificationTime = food.expiryDate - timeBefore
-
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent)
+        return PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT)
     }
 }
 
