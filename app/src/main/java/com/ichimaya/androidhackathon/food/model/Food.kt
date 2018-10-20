@@ -1,7 +1,5 @@
 package com.ichimaya.androidhackathon.food.model
 
-import android.os.SystemClock
-import timber.log.Timber
 import java.util.*
 
 data class Food(val id: String,

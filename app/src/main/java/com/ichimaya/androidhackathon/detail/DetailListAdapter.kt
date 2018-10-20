@@ -88,11 +88,11 @@ class DetailListAdapter(
             when (item.expirationState()) {
                 ExpirationState.SOON -> {
                     expirationWarning.visibility = View.VISIBLE
-                    expirationWarning.text = "EXPIRES SOON!"
+                    expirationWarning.text = context.getString(R.string.expiredSoon)
                 }
                 ExpirationState.EXPIRED -> {
                     expirationWarning.visibility = View.VISIBLE
-                    expirationWarning.text = "EXPIRED :("
+                    expirationWarning.text = context.getString(R.string.expired)
                 }
                 ExpirationState.NOT_EXPIRED -> expirationWarning.visibility = View.GONE
             }
@@ -107,3 +107,5 @@ class DetailListAdapter(
     }
 
 }
+
+

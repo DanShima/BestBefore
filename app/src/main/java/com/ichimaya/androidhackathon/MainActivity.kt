@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListen
     }
 
     /**
-     * Use this extension function to replace existing fragment in the MainActivity
+     * Use this extension function to replace an existing fragment in the MainActivity
      */
     private fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int, addToBackstack: Boolean = false) {
         supportFragmentManager.transact {
@@ -65,5 +65,4 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListen
     private inline fun FragmentManager.transact(action: FragmentTransaction.() -> FragmentTransaction) {
         beginTransaction().action().commit()
     }
-
 }

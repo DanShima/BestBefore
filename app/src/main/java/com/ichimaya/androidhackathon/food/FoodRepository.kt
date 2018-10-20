@@ -7,7 +7,6 @@ import com.google.firebase.database.*
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.notifications.NotificationHandler
-import timber.log.Timber
 import java.util.*
 
 
