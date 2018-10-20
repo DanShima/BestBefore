@@ -3,15 +3,17 @@ package com.ichimaya.androidhackathon.home
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ichimaya.androidhackathon.R
+import android.widget.Button
 import android.widget.EditText
-import kotlinx.android.synthetic.main.fragment_dialog_new_food.view.*
-import java.util.*
+import com.ichimaya.androidhackathon.R
+import timber.log.Timber
 import java.text.SimpleDateFormat
+import java.util.*
+
+
 
 
 /**
@@ -43,11 +45,23 @@ class NewFoodDialogFragment : DialogFragment() {
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show()
         }
 
+        rootView.findViewById<Button>(R.id.add_btn).setOnClickListener() {
+            onClickAdd()
+        }
+
+        rootView.findViewById<Button>(R.id.cancel_btn).setOnClickListener() {
+            this.dismiss()
+        }
+
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.dialog.setTitle("Add New Food Item")
+    }
+
+    private fun onClickAdd() {
+        Timber.d("ADD THIS ITEM")
     }
 }
