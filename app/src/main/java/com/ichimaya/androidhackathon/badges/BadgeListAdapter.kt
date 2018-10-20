@@ -47,7 +47,12 @@ class BadgeListAdapter : RecyclerView.Adapter<BadgeListAdapter.ViewHolder>() {
         val item = badges[position]
 
         viewHolder.apply {
-            badgeIcon.setImageResource(android.R.drawable.star_big_on)
+            badgeIcon.setImageResource(
+                    when (item.id) {
+                        "consumed-five-foods" -> R.drawable.ic_leftover
+                        "five-day-streak" -> R.drawable.ic_educate
+                        else -> R.drawable.ic_star_black_24dp
+                    })
             badgeTitle.text = item.name
             badgeDescription.text = item.description
         }

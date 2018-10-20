@@ -87,7 +87,7 @@ class BadgeRepository(val uuid: String) {
 
     private fun consumedFiveFoods(foods: List<Food>): Boolean {
         return foods.filter {
-            it.isConsumed()
+            it.isConsumed() && !it.isExpired()
         }.size >= 5
     }
 

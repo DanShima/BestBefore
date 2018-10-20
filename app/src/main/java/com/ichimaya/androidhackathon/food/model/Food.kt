@@ -15,6 +15,9 @@ fun Food.isConsumed() = consumeDate != null
 fun Food.isExpired() = expirationState() == ExpirationState.EXPIRED
 
 fun Food.expirationState(): ExpirationState {
+    consumeDate?.let {
+        return if (consumeDate < expiryDate) ExpirationState.NOT_EXPIRED else ExpirationState.EXPIRED
+    }
     val timeLeft = expiryDate - Calendar.getInstance().timeInMillis
     val limit = 24L * 60L * 60L * 1000L
     if (timeLeft < 0) {
