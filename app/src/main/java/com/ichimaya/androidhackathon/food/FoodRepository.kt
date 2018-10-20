@@ -57,10 +57,11 @@ class FoodRepository {
         registerFood(context, food.copy(consumeDate = Calendar.getInstance().timeInMillis)) // set consumeDate to now
     }
 
-    fun deleteFood(foodId: String) {
+    fun deleteFood(context: Context, food: Food) {
+        NotificationHandler().cancelNotification(context, food)
         FirebaseDatabase.getInstance()
                 .getReference("foods")
-                .child(foodId)
+                .child(food.id)
                 .removeValue()
     }
 
