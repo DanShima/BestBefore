@@ -8,16 +8,24 @@ import com.ichimaya.androidhackathon.food.model.Food
 
 class FoodRepository {
 
-    var foods: MutableLiveData<DataSnapshot> = MutableLiveData()
+    var foods: MutableLiveData<List<Food>> = MutableLiveData()
 
-    fun observeFoods(): LiveData<DataSnapshot> {
+    fun observeFoods(): LiveData<List<Food>> {
         if (foods.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("foods")
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                foods.postValue(dataSnapshot)
+                                foods.postValue(dataSnapshot.children.mapNotNull {
+                                    val food = dataSnapshot.child(it.key!!)
+                                    Food(
+                                            id = food.child("id").getValue<String>(String::class.java) ?: return,
+                                            name = food.child("name").getValue<String>(String::class.java) ?: return,
+                                            expiryDate = food.child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
+                                            consumeDate = food.child("consumeDate").getValue<Long>(Long::class.java)
+                                    )
+                                })
                             }
                         }
 
