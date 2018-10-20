@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ichimaya.androidhackathon.badges.model.Badge
 import com.ichimaya.androidhackathon.badges.model.fiveDayStreak
+import com.ichimaya.androidhackathon.badges.model.fiveFoodsConsumed
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.food.model.isExpired
@@ -34,8 +35,11 @@ class BadgeRepository(val uuid: String) {
                             }
                             val fiveDaysAgo = LocalDateTime.now()
                                     .minusDays(5)
-                            if (!foodsExpiredPastFiveDays(newFoods, fiveDaysAgo)) {
+                            if (!foodsExpiredPastFiveDays(newFoods, fiveDaysAgo) && foodWasAddedFiveDaysAgo(newFoods, fiveDaysAgo)) {
                                 registerAchievement(fiveDayStreak(Calendar.getInstance().timeInMillis))
+                            }
+                            if (consumedFiveFoods(newFoods)) {
+                                registerAchievement(fiveFoodsConsumed(Calendar.getInstance().timeInMillis))
                             }
                         }
                     }
@@ -59,7 +63,8 @@ class BadgeRepository(val uuid: String) {
                                     Badge(
                                             id = food.child("id").getValue<String>(String::class.java) ?: return,
                                             name = food.child("name").getValue<String>(String::class.java) ?: return,
-                                            achieveDate = food.child("achieveDate").getValue<Long>(Long::class.java) ?: 0L
+                                            achieveDate = food.child("achieveDate").getValue<Long>(Long::class.java) ?: 0L,
+                                            description = food.child("description").getValue<String>(String::class.java) ?: return
                                     )
                                 })
                             }
@@ -80,10 +85,23 @@ class BadgeRepository(val uuid: String) {
                 .updateChildren(mapOf(badge.id to badge))
     }
 
-    private fun foodsExpiredPastFiveDays(foods: List<Food>, fiveDaysAgo: LocalDateTime?): Boolean {
+    private fun consumedFiveFoods(foods: List<Food>): Boolean {
+        return foods.filter {
+            it.isConsumed()
+        }.size >= 5
+    }
+
+    private fun foodsExpiredPastFiveDays(foods: List<Food>, fiveDaysAgo: LocalDateTime): Boolean {
         return foods.any {
             val expiry = LocalDateTime.ofInstant(Instant.ofEpochMilli(it.expiryDate), ZoneId.systemDefault())
             !it.isConsumed() && it.isExpired() && expiry.isAfter(fiveDaysAgo)
+        }
+    }
+
+    private fun foodWasAddedFiveDaysAgo(foods: List<Food>, fiveDaysAgo: LocalDateTime): Boolean {
+        return foods.any {
+            val addDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(it.addDate), ZoneId.systemDefault())
+            addDate.dayOfYear == fiveDaysAgo.dayOfYear
         }
     }
 

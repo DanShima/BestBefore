@@ -28,8 +28,8 @@ class BadgeListAdapter : RecyclerView.Adapter<BadgeListAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val badgeIcon: ImageView = itemView.logo_badge
-        val badgeText: TextView = itemView.title_badge
-
+        val badgeTitle: TextView = itemView.title_badge
+        val badgeDescription: TextView = itemView.description_badge
     }
 
     override fun onCreateViewHolder(
@@ -48,7 +48,8 @@ class BadgeListAdapter : RecyclerView.Adapter<BadgeListAdapter.ViewHolder>() {
 
         viewHolder.apply {
             badgeIcon.setImageResource(android.R.drawable.star_big_on)
-            badgeText.text = item.name
+            badgeTitle.text = item.name
+            badgeDescription.text = item.description
         }
 
     }
