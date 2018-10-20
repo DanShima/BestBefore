@@ -8,9 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Food
 import kotlinx.android.synthetic.main.food_detail_list_item.view.*
@@ -21,9 +19,11 @@ import kotlinx.android.synthetic.main.food_detail_list_item.view.*
  */
 
 typealias ClickListener = (Int) -> Unit
+typealias CheckListener = (Boolean, Food) -> Unit
 
 class DetailListAdapter(
-    private val onClickListener: ClickListener
+    private val onClickListener: ClickListener,
+    private val onCheckListener: CheckListener
 ) : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
     private lateinit var context: Context
 
@@ -34,16 +34,22 @@ class DetailListAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        init {
-            itemView.setOnClickListener(this)
-        }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
         val foodIcon: ImageView = itemView.logo_detail
         val foodTitle: TextView = itemView.title_detail
         val checkDone: CheckBox = itemView.checkbox_detail
 
+        fun bind() {
+            checkDone.setOnCheckedChangeListener(this)
+            itemView.setOnClickListener(this)
+        }
+
         override fun onClick(view: View) {
             onClickListener(adapterPosition)
+        }
+
+        override fun onCheckedChanged(view: CompoundButton, checked: Boolean) {
+            onCheckListener(checked, foods[adapterPosition])
         }
     }
 
@@ -55,7 +61,7 @@ class DetailListAdapter(
         val inflater = LayoutInflater.from(context)
         return ViewHolder(
             inflater.inflate(R.layout.food_detail_list_item, parent, false)
-        )
+        ).apply { bind() }
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {

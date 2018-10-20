@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ichimaya.androidhackathon.R
+import com.ichimaya.androidhackathon.food.model.Food
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
@@ -37,7 +39,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun initDetailRecyclerView() {
-        detailListAdapter = DetailListAdapter(this::openItem)
+        detailListAdapter = DetailListAdapter(this::openItem, this::markItemAsConsumed)
         detailViewModel.observeFoods(categoryTitle).observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
         detail_recyclerview.apply {
             adapter = detailListAdapter
@@ -45,6 +47,12 @@ class DetailFragment : Fragment() {
                 orientation = LinearLayoutManager.VERTICAL
             }
             setHasFixedSize(true)
+        }
+    }
+
+    private fun markItemAsConsumed(checked: Boolean, food: Food) {
+        if (checked) {
+            Toast.makeText(activity, "Awesomesauce! You consumed ${food.name}", Toast.LENGTH_LONG).show()
         }
     }
 
