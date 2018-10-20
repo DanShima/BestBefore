@@ -27,7 +27,7 @@ class GridListAdapter(
     private val list: MutableList<Category>
 ) : RecyclerView.Adapter<GridListAdapter.ViewHolder>() {
     private lateinit var context: Context
-    private var items: List<Category> = mutableListOf()
+    //private var items: List<Category> = mutableListOf()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         init {
@@ -62,16 +62,16 @@ class GridListAdapter(
 
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = list.size
 
     fun getItem(position: Int): Category {
-        return items[position]
+        return list[position]
     }
 
 
-    fun setList(list: MutableList<Category>) {
-        items = list
-    }
+//    fun setList(list: MutableList<Category>) {
+//        items = list
+//    }
 
     private fun Context.getNonNullDrawable(@DrawableRes id: Int): Drawable {
         return ContextCompat.getDrawable(this, id) ?: throw Exception("Missing drawable")

@@ -17,7 +17,8 @@ class CategoryViewModel: ViewModel() {
         R.drawable.ic_milk,
         R.drawable.ic_bread,
         R.drawable.ic_cheese,
-        R.drawable.ic_meal)
+        R.drawable.ic_meal,
+        R.drawable.ic_unknown_food)
 
     private val categoryTitles = arrayOf(
         "Fruit",
@@ -27,7 +28,8 @@ class CategoryViewModel: ViewModel() {
         "Drink",
         "Bread",
         "Dairy",
-        "Meal")
+        "Meal",
+        "Unknown")
 
     fun setupCategoryList(): MutableList<Category> {
         for (i in categoryIcons.indices) {

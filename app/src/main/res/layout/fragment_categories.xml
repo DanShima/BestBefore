@@ -4,11 +4,6 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TEXT TEXT ETX"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/category_recyclerview"
         android:scrollbars="vertical"
@@ -16,4 +11,10 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="104dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"/>
 </LinearLayout>

@@ -25,7 +25,6 @@ class CategoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
-        categoryViewModel.setupCategoryList()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +34,6 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initCategoryRecyclerView()
-        categoryAdapter.setList(categoryViewModel.setupCategoryList())
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -49,8 +47,9 @@ class CategoryFragment : Fragment() {
         }
     }
 
-    fun openCatgory(position: Int) {
-        Log.d("Test", "Baka")
+    private fun openCatgory(position: Int) {
+        val selectedCategory = categoryAdapter.getItem(position)
+        Log.d("TestBlabla", "Baka $position ${selectedCategory.title}")
     }
 
     companion object {
