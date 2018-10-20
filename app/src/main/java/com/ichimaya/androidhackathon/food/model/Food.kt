@@ -5,6 +5,7 @@ import java.util.*
 
 data class Food(val id: String,
                 val name: String,
+                val addDate: Long, // add date in milliseconds
                 val expiryDate: Long, // expiry date in milliseconds
                 val category: String,
                 val consumeDate: Long?) { // consume date in milliseconds
@@ -29,6 +30,7 @@ fun DataSnapshot.toFood(): Food? {
     return Food(
             id = child("id").getValue<String>(String::class.java) ?: return null,
             name = child("name").getValue<String>(String::class.java) ?: return null,
+            addDate = child("addDate").getValue<Long>(Long::class.java) ?: return null,
             expiryDate = child("expiryDate").getValue<Long>(Long::class.java) ?: 0L,
             category = child("category").getValue<String>(String::class.java) ?: return null,
             consumeDate = child("consumeDate").getValue<Long>(Long::class.java)
@@ -42,4 +44,4 @@ enum class ExpirationState {
 }
 
 fun createFood(name: String, expiryDate: Long, category: String) =
-        Food(UUID.randomUUID().toString(), name, expiryDate, category, null)
+        Food(UUID.randomUUID().toString(), name, expiryDate, Calendar.getInstance().timeInMillis, category, null)
