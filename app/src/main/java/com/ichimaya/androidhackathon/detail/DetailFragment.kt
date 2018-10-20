@@ -37,7 +37,7 @@ class DetailFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         detailListAdapter = DetailListAdapter(this::openItem)
-        FoodRepository().observeFoods().observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
+        detailViewModel.observeFoods().observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
         detail_recyclerview.apply {
             layoutManager = LinearLayoutManager(activity).apply {
                 orientation = LinearLayoutManager.VERTICAL
