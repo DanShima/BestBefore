@@ -3,12 +3,16 @@ package com.ichimaya.androidhackathon.challenges
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ichimaya.androidhackathon.R
+import com.ichimaya.androidhackathon.utils.showDividerBetweenListItems
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
@@ -43,12 +47,23 @@ class ChallengeFragment : Fragment() {
                 orientation = LinearLayoutManager.VERTICAL
             }
             setHasFixedSize(true)
+            showDividerBetweenListItems()
         }
         challengeListAdapter.updateChallenges(challengeViewModel.setupChallengeList())
     }
 
     private fun startChallenge(position: Int) {
-        // TODO: add a dialog here
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Start this challenge")
+            .setTitle("bla")
+            .setCancelable(true)
+            .setPositiveButton("Start") { _, _ -> TODO() }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        val alert = builder.create()
+        alert.show()
+        val messageView = alert.findViewById<View>(android.R.id.message) as TextView
+        messageView.gravity = Gravity.CENTER
+        messageView.setTextIsSelectable(true)
         Log.d("TestMe", "$position")
     }
 
