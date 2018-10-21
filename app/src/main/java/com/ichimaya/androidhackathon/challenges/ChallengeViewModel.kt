@@ -3,6 +3,9 @@ package com.ichimaya.androidhackathon.challenges
 import android.arch.lifecycle.ViewModel
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.food.model.isConsumed
+import com.ichimaya.androidhackathon.food.model.isExpired
+import com.ichimaya.androidhackathon.utils.toLocalDateTime
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -68,16 +71,37 @@ class ChallengeViewModel: ViewModel() {
                 ChallengeState.STARTED
             } else {
                 when (challenge.title) {
-                    "Fruit Ninja" -> ChallengeState.SUCCEEDED
-                    "Vegan  Certificate" -> ChallengeState.SUCCEEDED
+                    "Fruit Ninja" -> if (noSpoiledFruitForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
+                    "Vegan  Certificate" -> if (noMeatOrDairyFor3Weeks(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Egglicious" -> ChallengeState.SUCCEEDED
-                    "Master of Frugality" -> ChallengeState.SUCCEEDED
+                    "Master of Frugality" -> if (noSpoiledFoodForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "An apple a day, keep the doctor away" -> ChallengeState.SUCCEEDED
                     "Left but not over" -> ChallengeState.SUCCEEDED
                     else -> ChallengeState.FAILED // ¯\_(ツ)_/¯
                 }
             }
         } ?: return ChallengeState.NOT_STARTED
+    }
+
+    private fun noMeatOrDairyFor3Weeks(foods: List<Food>): Boolean {
+        val threeWeeksAgo = LocalDateTime.now().minusDays(21)
+        return foods.none {
+            it.isConsumed() && it.containsAnimalProducts() && it.consumeDate?.toLocalDateTime()?.isAfter(threeWeeksAgo) ?: false
+        }
+    }
+
+    private fun noSpoiledFruitForAWeek(foods: List<Food>): Boolean {
+        val sevenDaysAgo = LocalDateTime.now().minusDays(7)
+        return foods.none {
+            it.category == "Fruit" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
+        }
+    }
+
+    private fun noSpoiledFoodForAMonth(foods: List<Food>): Boolean {
+        val aMonthAgo = LocalDateTime.now().minusMonths(1)
+        return foods.none {
+            it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(aMonthAgo)
+        }
     }
 
     enum class ChallengeState {
@@ -87,3 +111,6 @@ class ChallengeViewModel: ViewModel() {
         SUCCEEDED
     }
 }
+
+private fun Food.containsAnimalProducts(): Boolean =
+        category == "Meat" || category == "Dairy" || category == "Fish"
