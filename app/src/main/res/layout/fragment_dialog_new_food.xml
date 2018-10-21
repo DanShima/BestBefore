@@ -18,7 +18,9 @@
             android:id="@+id/food_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/dialog_new_food_enter_product_name_hint" />
+            android:hint="@string/dialog_new_food_enter_product_name_hint"
+            android:inputType="textNoSuggestions"
+            android:importantForAutofill="no" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView
