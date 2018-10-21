@@ -15,14 +15,15 @@ import kotlinx.android.synthetic.main.challenge_list_item.view.*
  * Adapter for the RecyclerView that displays food in categories
  */
 
-typealias ClickListener = (Int, Challenge) -> Unit
+typealias ClickListener = (Int) -> Unit
 
 class ChallengeListAdapter(
-    private val onClickListener: ClickListener
+    private val onClickListener: ClickListener,
+    var challenges: List<Challenge>
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
     private lateinit var context: Context
 
-    var challenges: List<Challenge> = listOf()
+//    var challenges: List<Challenge> = listOf()
 
     fun updateChallenges(challenges: List<Challenge>) {
         this.challenges = challenges
@@ -30,12 +31,16 @@ class ChallengeListAdapter(
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
         val title: TextView = itemView.challenge_title
         val icon: ImageView = itemView.challenge_badge
         val description: TextView = itemView.challenge_subtext
 
+
         override fun onClick(view: View) {
-            onClickListener(adapterPosition, getItem(adapterPosition))
+            onClickListener(adapterPosition)
         }
     }
 
