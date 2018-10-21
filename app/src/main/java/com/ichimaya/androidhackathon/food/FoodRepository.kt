@@ -1,6 +1,5 @@
 package com.ichimaya.androidhackathon.food
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.google.firebase.database.DataSnapshot
@@ -16,9 +15,9 @@ import java.util.*
 
 class FoodRepository(val uuid: String) {
 
-    var foods: MutableLiveData<List<Food>> = MutableLiveData()
+    var foods: MutableLiveData<Map<String, List<Food>>> = MutableLiveData()
 
-    fun observeFoods(categoryTitle: String): LiveData<List<Food>> {
+    fun observeFoods(): MutableLiveData<Map<String, List<Food>>> {
         if (foods.value == null) {
             FirebaseDatabase.getInstance()
                     .getReference("foods")
@@ -29,7 +28,7 @@ class FoodRepository(val uuid: String) {
                                 val newFoods = dataSnapshot.children.mapNotNull {
                                     dataSnapshot.child(it.key!!).toFood()
                                 }
-                                foods.postValue(newFoods.filter { it.consumeDate == null && it.category == categoryTitle })
+                                foods.postValue(newFoods.filter { it.consumeDate == null }.groupBy { it.category })
                             }
                         }
 
@@ -65,4 +64,18 @@ class FoodRepository(val uuid: String) {
                 .removeValue()
     }
 
+
+    companion object {
+        var repository: FoodRepository? = null
+
+        fun getInstance(uuid: String): FoodRepository {
+            val repo = repository
+            return if (repo == null) {
+                repository = FoodRepository(uuid)
+                repository!!
+            } else {
+                repo
+            }
+        }
+    }
 }
