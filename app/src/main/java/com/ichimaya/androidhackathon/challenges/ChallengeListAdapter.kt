@@ -11,7 +11,7 @@ import com.ichimaya.androidhackathon.R
 import kotlinx.android.synthetic.main.challenge_list_item.view.*
 
 /**
- * Adapter for the RecyclerView that displays food in categories
+ * Adapter for the RecyclerView that displays a list of challenges
  */
 
 typealias ClickListener = (Int) -> Unit

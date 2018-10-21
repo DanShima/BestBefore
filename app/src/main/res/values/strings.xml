@@ -3,4 +3,6 @@
     <string name="expired">EXPIRED :(</string>
     <string name="expiredSoon">EXPIRES SOON!</string>
     <string name="emptyAchievement">No achievements yet</string>
+    <string name="start">Start</string>
+    <string name="cancel">Cancel</string>
 </resources>

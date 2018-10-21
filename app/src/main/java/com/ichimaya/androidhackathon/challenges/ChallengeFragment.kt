@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,12 +42,14 @@ class ChallengeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+
     private fun initRecyclerView() {
         challengeListAdapter = ChallengeListAdapter(this::onChallengeSelected)
         challengeViewModel.observeChallenges(activity!!).observeForever {
             val keys = it?.keys
             challengeListAdapter.updateChallenges(keys?.toList() ?: listOf()) // FIXME put the challenge states into adapter as well
         }
+
         challenge_recyclerview.apply {
             adapter = challengeListAdapter
             layoutManager = LinearLayoutManager(activity).apply {
@@ -59,21 +60,26 @@ class ChallengeFragment : Fragment() {
         }
     }
 
+
+    /**
+     * Show a dialog that allows user to start a challenge
+     */
     private fun onChallengeSelected(position: Int) {
-        Log.d("TestMe", "$position")
         val builder = AlertDialog.Builder(requireActivity())
         builder.setMessage("Start this challenge? \nYou have ${challengeListAdapter.getItem(position).challengeLength} days to complete it.")
             .setTitle(challengeListAdapter.getItem(position).title)
             .setCancelable(true)
-            .setPositiveButton("Start") { _, _ -> startChallenge(challengeListAdapter.getItem(position)) }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .setPositiveButton(this.getString(R.string.start)) { _, _ -> startChallenge(challengeListAdapter.getItem(position)) }
+            .setNegativeButton(this.getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
         val alert = builder.create()
         alert.show()
     }
 
+    /**
+     * Start counting the time left to complete a challenge
+     */
     private fun startChallenge(challenge: Challenge) {
         Timber.d("START CHALLENGE")
-
         val editor = sharedPreferences.edit()
         editor.putLong(challenge.title, System.currentTimeMillis())
         editor.apply()
@@ -84,12 +90,6 @@ class ChallengeFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(): ChallengeFragment {
-            return ChallengeFragment().apply {
-                arguments = Bundle().apply {
-                    // Nothing to add yet
-                }
-            }
-        }
+        fun newInstance(): ChallengeFragment = ChallengeFragment()
     }
 }

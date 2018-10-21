@@ -86,7 +86,7 @@ class ChallengeViewModel: ViewModel() {
             }
         } ?: return ChallengeState.NOT_STARTED
     }
-
+    
     private fun eatLeftoverForAWeek(foods: List<Food>): Boolean {
         val oneWeekAgo = LocalDateTime.now().minusDays(7)
         return foods.none {
