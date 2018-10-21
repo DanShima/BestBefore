@@ -2,9 +2,7 @@ package com.ichimaya.androidhackathon.challenges
 
 import android.arch.lifecycle.ViewModel
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.Food
-import com.ichimaya.androidhackathon.food.model.isConsumed
-import com.ichimaya.androidhackathon.food.model.isExpired
+import com.ichimaya.androidhackathon.food.model.*
 import com.ichimaya.androidhackathon.utils.toLocalDateTime
 import java.time.Instant
 import java.time.LocalDateTime
