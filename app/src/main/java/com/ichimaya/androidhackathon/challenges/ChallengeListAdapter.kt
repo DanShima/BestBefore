@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.challenge_list_item.view.*
  * Adapter for the RecyclerView that displays food in categories
  */
 
-typealias ClickListener = (Int) -> Unit
+typealias ClickListener = (Int, Challenge) -> Unit
 
 class ChallengeListAdapter(
     private val onClickListener: ClickListener
@@ -35,7 +35,7 @@ class ChallengeListAdapter(
         val description: TextView = itemView.challenge_subtext
 
         override fun onClick(view: View) {
-            onClickListener(adapterPosition)
+            onClickListener(adapterPosition, getItem(adapterPosition))
         }
     }
 

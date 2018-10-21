@@ -40,7 +40,7 @@ class ChallengeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        challengeListAdapter = ChallengeListAdapter(this::startChallenge)
+        challengeListAdapter = ChallengeListAdapter(this::onChallengeSelected)
         detail_recyclerview.apply {
             adapter = challengeListAdapter
             layoutManager = LinearLayoutManager(activity).apply {
@@ -52,19 +52,23 @@ class ChallengeFragment : Fragment() {
         challengeListAdapter.updateChallenges(challengeViewModel.setupChallengeList())
     }
 
-    private fun startChallenge(position: Int) {
+    private fun onChallengeSelected(position: Int, challenge: Challenge) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Start this challenge")
-            .setTitle("bla")
+            .setTitle(challenge.title)
             .setCancelable(true)
-            .setPositiveButton("Start") { _, _ -> TODO() }
+            .setPositiveButton("Start") { _, _ -> startChallenge() }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         val alert = builder.create()
         alert.show()
         val messageView = alert.findViewById<View>(android.R.id.message) as TextView
         messageView.gravity = Gravity.CENTER
         messageView.setTextIsSelectable(true)
-        Log.d("TestMe", "$position")
+
+    }
+
+    private fun startChallenge() {
+        Log.d("TestMe", "START COUNTING HERE")
     }
 
     companion object {
