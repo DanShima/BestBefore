@@ -40,7 +40,8 @@ class DetailFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         detailListAdapter = DetailListAdapter(categoryTitle, this::openItem, this::markItemAsConsumed)
-        detailViewModel.observeFoods(activity!!, categoryTitle).observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
+        detailViewModel.observeFoods(activity!!, categoryTitle).observeForever { foods ->
+            detailListAdapter.updateFoods(foods ?: listOf()) }
         detail_recyclerview.apply {
             adapter = detailListAdapter
             layoutManager = LinearLayoutManager(activity).apply {

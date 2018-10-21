@@ -39,7 +39,7 @@ class BadgeFragment : Fragment() {
         badgeViewModel.observeBadges(activity!!).observeForever { badges -> badges?.let {
             // show empty view if there are no badges/achievements
             val emptyViewVisibility = if (badges.isEmpty()) View.VISIBLE else View.GONE
-            empty_view_badge.visibility = emptyViewVisibility
+            empty_view_badge?.visibility = emptyViewVisibility
 
             badgeListAdapter.updateBadges(it) }
         }
