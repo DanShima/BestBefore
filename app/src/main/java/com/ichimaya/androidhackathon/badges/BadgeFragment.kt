@@ -35,11 +35,14 @@ class BadgeFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         badgeListAdapter = BadgeListAdapter()
-        // show empty view if there are no badges/achievements
-        val emptyViewVisibility = if (badgeListAdapter.itemCount == 0) View.VISIBLE else View.GONE
-        empty_view_badge.visibility = emptyViewVisibility
         
-        badgeViewModel.observeBadges(activity!!).observeForever { foods -> foods?.let { badgeListAdapter.updateBadges(it) } }
+        badgeViewModel.observeBadges(activity!!).observeForever { foods -> foods?.let {
+            // show empty view if there are no badges/achievements
+            val emptyViewVisibility = if (badgeListAdapter.itemCount == 0) View.VISIBLE else View.GONE
+            empty_view_badge.visibility = emptyViewVisibility
+
+            badgeListAdapter.updateBadges(it) }
+        }
         badge_recyclerview.apply {
             adapter = badgeListAdapter
             layoutManager = LinearLayoutManager(activity).apply {

@@ -15,8 +15,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 class ChallengeViewModel: ViewModel() {
-    private var challengeList = mutableListOf<Challenge>()
-    private lateinit var challenge: Challenge
 
     private val titles = arrayOf(
         "Fruit Ninja",
@@ -67,7 +65,7 @@ class ChallengeViewModel: ViewModel() {
         return challengeMap
     }
 
-    fun getChallengeState(foods: List<Food>, challenge: Challenge): ChallengeState {
+    private fun getChallengeState(foods: List<Food>, challenge: Challenge): ChallengeState {
         challenge.startDate?.let {startDate ->
             val endDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(startDate + (60 * 60 * 24 * 1000) * challenge.challengeLength), ZoneId.systemDefault())
             return if (endDate.isAfter(LocalDateTime.now())) {
@@ -75,7 +73,7 @@ class ChallengeViewModel: ViewModel() {
             } else {
                 when (challenge.title) {
                     "Fruit Ninja" -> if (noSpoiledFruitForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
-                    "Vegan  Certificate" -> if (noMeatOrDairyFor3Weeks(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
+                    "Vegan Certificate" -> if (noMeatOrDairyFor3Weeks(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Egglicious" -> if (finishEggsInThreeDays(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Master of Frugality" -> if (noSpoiledFoodForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "An apple a day, keep the doctor away" -> if (eatApplesForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
