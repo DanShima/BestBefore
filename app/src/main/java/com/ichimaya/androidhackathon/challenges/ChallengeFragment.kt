@@ -81,6 +81,7 @@ class ChallengeFragment : Fragment() {
         val editor = sharedPreferences.edit()
         editor.putLong(challenge.title, System.currentTimeMillis())
         editor.apply()
+        initRecyclerView() // this is horrible! we should observe the preference instead, but time is a factor right now :|
 
         Toast.makeText(context, this.getString(R.string.toast_challenge_started, challenge.title), Toast.LENGTH_LONG).show()
     }
