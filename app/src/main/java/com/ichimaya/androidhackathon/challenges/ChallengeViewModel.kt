@@ -3,6 +3,7 @@ package com.ichimaya.androidhackathon.challenges
 import android.arch.lifecycle.ViewModel
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.food.model.isExpired
 import com.ichimaya.androidhackathon.utils.toLocalDateTime
 import java.time.Instant
@@ -71,7 +72,7 @@ class ChallengeViewModel: ViewModel() {
             } else {
                 when (challenge.title) {
                     "Fruit Ninja" -> if (noSpoiledFruitForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
-                    "Vegan  Certificate" -> ChallengeState.SUCCEEDED
+                    "Vegan  Certificate" -> if (noMeatOrDairyFor3Weeks(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Egglicious" -> ChallengeState.SUCCEEDED
                     "Master of Frugality" -> ChallengeState.SUCCEEDED
                     "An apple a day, keep the doctor away" -> ChallengeState.SUCCEEDED
@@ -80,6 +81,13 @@ class ChallengeViewModel: ViewModel() {
                 }
             }
         } ?: return ChallengeState.NOT_STARTED
+    }
+
+    private fun noMeatOrDairyFor3Weeks(foods: List<Food>): Boolean {
+        val threeWeeksAgo = LocalDateTime.now().minusDays(21)
+        return foods.none {
+            it.isConsumed() && it.containsAnimalProducts() && it.consumeDate?.toLocalDateTime()?.isAfter(threeWeeksAgo) ?: false
+        }
     }
 
     private fun noSpoiledFruitForAWeek(foods: List<Food>): Boolean {
@@ -96,3 +104,6 @@ class ChallengeViewModel: ViewModel() {
         SUCCEEDED
     }
 }
+
+private fun Food.containsAnimalProducts(): Boolean =
+        category == "Meat" || category == "Dairy" || category == "Fish"
