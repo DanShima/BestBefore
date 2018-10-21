@@ -1,11 +1,14 @@
 package com.ichimaya.androidhackathon
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import com.ichimaya.androidhackathon.badges.BadgeFragment
 import com.ichimaya.androidhackathon.challenges.ChallengeFragment
 import com.ichimaya.androidhackathon.detail.DetailFragment
@@ -41,6 +44,21 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryClickListen
     private fun setupToolbar() {
         setSupportActionBar(toolbar_main_layout)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_camera) {
+            val intent = Intent(this, ARActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCategoryClicked(position: Int, category: Category) {

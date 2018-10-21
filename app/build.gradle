@@ -23,11 +23,16 @@ android {
     dataBinding {
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.5.1'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -43,3 +48,21 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.ar.sceneform.plugin'
+
+
+sceneform.asset('sampledata/apple.obj',
+        'default',
+        'sampledata/Apple.sfa',
+        'src/main/assets/Apple')
+
+sceneform.asset('sampledata/apple.obj',
+        'default',
+        'sampledata/apple.sfa',
+        'src/main/assets/apple')
+
+
+sceneform.asset('sampledata/rotten.obj',
+        'default',
+        'sampledata/rotten.sfa',
+        'src/main/assets/rotten')
