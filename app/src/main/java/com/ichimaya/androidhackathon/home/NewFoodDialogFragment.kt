@@ -87,7 +87,7 @@ class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListen
         val dateString = this.dialog.findViewById<EditText>(R.id.expiration_date).text.toString()
         val expiraryDate = sdf.parse(dateString)
         val food = createFood(name, expiraryDate.time, selectedCategory)
-        FoodRepository(UserDetailsService().getUUID(context!!)).registerFood(context!!, food)
+        FoodRepository.getInstance(UserDetailsService().getUUID(context!!)).registerFood(context!!, food)
         Toast.makeText(context, "Added $name!", Toast.LENGTH_SHORT).show()
         dismiss()
     }
