@@ -1,6 +1,7 @@
 package com.ichimaya.androidhackathon.challenges
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +70,12 @@ class ChallengeListAdapter(
                 ChallengeViewModel.ChallengeState.STARTED -> "Challenge in progress"
                 ChallengeViewModel.ChallengeState.FAILED -> "You failed :("
                 null -> ""
+            }
+            when(state) {
+                ChallengeViewModel.ChallengeState.NOT_STARTED -> challengeState.setTextColor(context.getColor(R.color.colorDefault))
+                ChallengeViewModel.ChallengeState.SUCCEEDED -> challengeState.setTextColor(context.getColor(R.color.colorSuccess))
+                ChallengeViewModel.ChallengeState.STARTED -> challengeState.setTextColor(context.getColor(R.color.colorProgress))
+                ChallengeViewModel.ChallengeState.FAILED -> challengeState.setTextColor(context.getColor(R.color.colorFail))
             }
         }
 

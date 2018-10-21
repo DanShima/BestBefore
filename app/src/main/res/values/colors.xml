@@ -9,4 +9,8 @@
     <color name="colorError">#C5032B</color>
     <color name="colorText">#442C2E</color>
     <color name="colorBadge">#de8669</color>
+    <color name="colorProgress">#FFE1AF0C</color>
+    <color name="colorSuccess">#5aba31</color>
+    <color name="colorFail">#cc2828</color>
+    <color name="colorDefault">#4e4d44</color>
 </resources>
