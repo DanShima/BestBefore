@@ -50,19 +50,8 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-
-sceneform.asset('sampledata/apple.obj',
-        'default',
-        'sampledata/Apple.sfa',
-        'src/main/assets/Apple')
-
 sceneform.asset('sampledata/apple.obj',
         'default',
         'sampledata/apple.sfa',
         'src/main/assets/apple')
 
-
-sceneform.asset('sampledata/rotten.obj',
-        'default',
-        'sampledata/rotten.sfa',
-        'src/main/assets/rotten')
