@@ -76,20 +76,34 @@ class ChallengeViewModel: ViewModel() {
                 when (challenge.title) {
                     "Fruit Ninja" -> if (noSpoiledFruitForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Vegan  Certificate" -> if (noMeatOrDairyFor3Weeks(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
-                    "Egglicious" -> ChallengeState.SUCCEEDED
+                    "Egglicious" -> if (finishEggsInThreeDays(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Master of Frugality" -> if (noSpoiledFoodForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
-                    "An apple a day, keep the doctor away" -> ChallengeState.SUCCEEDED
+                    "An apple a day, keep the doctor away" -> if (eatApplesForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Left but not over" -> if (eatLeftoverForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     else -> ChallengeState.FAILED // ¯\_(ツ)_/¯
                 }
             }
         } ?: return ChallengeState.NOT_STARTED
     }
+
+    private fun eatApplesForAMonth(foods: List<Food>): Boolean {
+        val oneMonth = LocalDateTime.now().minusDays(30)
+        return foods.none {
+            it.getCategoryType() == CategoryType.FRUIT && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(oneMonth)
+        }
+    }
+
+    private fun finishEggsInThreeDays(foods: List<Food>): Boolean {
+        val threeDays = LocalDateTime.now().minusDays(3)
+        return foods.none {
+            it.getCategoryType() == CategoryType.DAIRY && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(threeDays)
+        }
+    }
     
     private fun eatLeftoverForAWeek(foods: List<Food>): Boolean {
         val oneWeekAgo = LocalDateTime.now().minusDays(7)
         return foods.none {
-            it.category == "Leftover" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(oneWeekAgo)
+            it.getCategoryType() == CategoryType.MEAL && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(oneWeekAgo)
         }
     }
 
