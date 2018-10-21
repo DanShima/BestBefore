@@ -15,6 +15,7 @@
     <!-- Toasts -->
     <string name="toast_challenge_started">Challenge %s has started!</string>
     <string name="toast_new_food_added">Added %s!</string>
+    <string name="toast_food_consumed">Awesomesauce! You consumed %s</string>
 
     <!-- Bottom navigation bar -->
     <string name="navigation_home">Home</string>
