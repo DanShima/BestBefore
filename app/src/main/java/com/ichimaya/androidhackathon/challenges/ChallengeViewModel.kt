@@ -93,7 +93,7 @@ class ChallengeViewModel: ViewModel() {
     private fun noSpoiledFruitForAWeek(foods: List<Food>): Boolean {
         val sevenDaysAgo = LocalDateTime.now().minusDays(7)
         return foods.none {
-            it.category == "Fruit" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
+            it.getCategoryType() == CategoryType.FRUIT && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
         }
     }
 
@@ -113,4 +113,6 @@ class ChallengeViewModel: ViewModel() {
 }
 
 private fun Food.containsAnimalProducts(): Boolean =
-        category == "Meat" || category == "Dairy" || category == "Fish"
+        getCategoryType() == CategoryType.MEAT
+                || getCategoryType() == CategoryType.DAIRY
+                || getCategoryType() == CategoryType.FISH

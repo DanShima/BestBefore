@@ -10,9 +10,7 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.ExpirationState
-import com.ichimaya.androidhackathon.food.model.Food
-import com.ichimaya.androidhackathon.food.model.expirationState
+import com.ichimaya.androidhackathon.food.model.*
 import kotlinx.android.synthetic.main.food_detail_list_item.view.*
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDateTime
@@ -97,17 +95,16 @@ class DetailListAdapter(
 
             viewHolder.apply {
                 foodIcon.setImageResource(
-                        when (categoryTitle) { // TODO make an enum or sealed class for this
-                            "Fruit" -> R.drawable.ic_fruit
-                            "Vegetable" -> R.drawable.ic_veggie
-                            "Fish" -> R.drawable.ic_seafood
-                            "Meat" -> R.drawable.ic_meat
-                            "Drink" -> R.drawable.ic_milk
-                            "Bread" -> R.drawable.ic_bread
-                            "Dairy" -> R.drawable.ic_cheese
-                            "Meal" -> R.drawable.ic_meal
-                            "Unknown" -> R.drawable.ic_unknown_food
-                            else -> R.drawable.ic_unknown_food
+                        when (categoryTypeFromTitle(categoryTitle)) {
+                            CategoryType.FRUIT -> R.drawable.ic_fruit
+                            CategoryType.VEGETABLES -> R.drawable.ic_veggie
+                            CategoryType.FISH -> R.drawable.ic_seafood
+                            CategoryType.MEAT -> R.drawable.ic_meat
+                            CategoryType.DRINK -> R.drawable.ic_milk
+                            CategoryType.BREAD -> R.drawable.ic_bread
+                            CategoryType.DAIRY -> R.drawable.ic_cheese
+                            CategoryType.MEAL -> R.drawable.ic_meal
+                            CategoryType.UNKNOWN -> R.drawable.ic_unknown_food
                         })
                 foodTitle.text = item.name
                 when (item.expirationState()) {

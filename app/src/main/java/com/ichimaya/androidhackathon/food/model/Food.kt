@@ -29,6 +29,8 @@ fun Food.expirationState(): ExpirationState {
     return ExpirationState.NOT_EXPIRED
 }
 
+fun Food.getCategoryType(): CategoryType = categoryTypeFromTitle(category)
+
 fun DataSnapshot.toFood(): Food? {
     return Food(
             id = child("id").getValue<String>(String::class.java) ?: return null,
