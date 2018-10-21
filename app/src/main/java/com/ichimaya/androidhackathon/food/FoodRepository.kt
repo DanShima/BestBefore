@@ -28,7 +28,7 @@ class FoodRepository(val uuid: String) {
                                 val newFoods = dataSnapshot.children.mapNotNull {
                                     dataSnapshot.child(it.key!!).toFood()
                                 }
-                                foods.postValue(newFoods.filter { it.consumeDate == null }.groupBy { it.category })
+                                foods.postValue(newFoods.asSequence().filter { it.consumeDate == null }.groupBy { it.category })
                             }
                         }
 
