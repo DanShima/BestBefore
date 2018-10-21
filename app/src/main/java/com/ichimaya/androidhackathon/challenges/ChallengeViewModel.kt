@@ -1,9 +1,11 @@
 package com.ichimaya.androidhackathon.challenges
 
 import android.arch.lifecycle.ViewModel
-import android.util.Log
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.Category
+import com.ichimaya.androidhackathon.food.model.Food
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class ChallengeViewModel: ViewModel() {
     private var challengeList = mutableListOf<Challenge>()
@@ -33,7 +35,7 @@ class ChallengeViewModel: ViewModel() {
         "Eat an apple a day for a month",
         "Save lunch money by eating 5 leftovers in a week")
 
-    private val endDates = intArrayOf(
+    private val challengeLength = intArrayOf(
         7,
         21,
         3,
@@ -41,21 +43,39 @@ class ChallengeViewModel: ViewModel() {
         30,
         7)
 
-    fun createStartDate(date: Int) {
+    fun createStartDate(date: Long) {
         challenge.startDate = date
     }
 
     fun setupChallengeList(): MutableList<Challenge> {
         for (i in icons.indices) {
-            addChallengesToList(icons[i], titles[i], descriptions[i], null, endDates[i])
+            addChallengesToList(icons[i], titles[i], descriptions[i], null, challengeLength[i])
         }
         return challengeList
     }
 
-    private fun addChallengesToList(icon: Int, title: String, description: String, startDate: Int?, endDate: Int):
+    private fun addChallengesToList(icon: Int, title: String, description: String, startDate: Long?, challengeLength: Int):
         MutableList<Challenge> {
-        val challenge = Challenge(title, icon, description, null, endDate)
+        val challenge = Challenge(title, icon, description, null, challengeLength)
         challengeList.add(challenge)
         return challengeList
+    }
+
+    fun getChallengeState(foods: List<Food>, challenge: Challenge): ChallengeState {
+        challenge.startDate?.let {startDate ->
+            val endDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(startDate + (60 * 60 * 24 * 1000) * challenge.challengeLength), ZoneId.systemDefault())
+            if (endDate.isAfter(LocalDateTime.now())) {
+                return ChallengeState.STARTED
+            } else {
+                return ChallengeState.SUCCEEDED // FIXME actually calculate state :D
+            }
+        } ?: return ChallengeState.NOT_STARTED
+    }
+
+    enum class ChallengeState {
+        NOT_STARTED,
+        STARTED,
+        FAILED,
+        SUCCEEDED
     }
 }
