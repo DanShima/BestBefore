@@ -3,6 +3,8 @@ package com.ichimaya.androidhackathon.challenges
 import android.arch.lifecycle.ViewModel
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Food
+import com.ichimaya.androidhackathon.food.model.isExpired
+import com.ichimaya.androidhackathon.utils.toLocalDateTime
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -68,7 +70,7 @@ class ChallengeViewModel: ViewModel() {
                 ChallengeState.STARTED
             } else {
                 when (challenge.title) {
-                    "Fruit Ninja" -> ChallengeState.SUCCEEDED
+                    "Fruit Ninja" -> if (noSpoiledFruitForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Vegan  Certificate" -> ChallengeState.SUCCEEDED
                     "Egglicious" -> ChallengeState.SUCCEEDED
                     "Master of Frugality" -> ChallengeState.SUCCEEDED
@@ -78,6 +80,13 @@ class ChallengeViewModel: ViewModel() {
                 }
             }
         } ?: return ChallengeState.NOT_STARTED
+    }
+
+    private fun noSpoiledFruitForAWeek(foods: List<Food>): Boolean {
+        val sevenDaysAgo = LocalDateTime.now().minusDays(7)
+        return foods.none {
+            it.category == "Fruit" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
+        }
     }
 
     enum class ChallengeState {
