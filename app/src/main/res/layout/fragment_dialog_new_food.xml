@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:padding="16dp">
+    android:padding="@dimen/margin_medium">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/name_text_input_layout"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/dialog_new_food_width"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="@dimen/margin_small">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/food_name"
@@ -29,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_new_food_category_label"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="4dp"/>
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_small"/>
 
     <Spinner
         android:id="@+id/category_spinner"
@@ -44,15 +42,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_new_food_expiration_date_label"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="4dp"/>
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_small"/>
 
     <EditText
         style="@style/TextAppearance.AppCompat.Subhead"
         android:id="@+id/expiration_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:clickable="true"
         android:focusable="false"
         android:autofillHints="@string/dialog_new_food_expiration_date_hint"
@@ -62,7 +60,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:orientation="horizontal"
         android:gravity="end">
         <Button

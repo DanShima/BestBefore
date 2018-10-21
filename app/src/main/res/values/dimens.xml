@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="grid_view_item_spacing">4dp</dimen>
+
+    <dimen name="bottom_navigation_height">56dp</dimen>
+
+    <dimen name="margin_none">0dp</dimen>
+    <dimen name="margin_xsmall">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_fab">34dp</dimen>
+    <dimen name="margin_challenge_badge">10dp</dimen>
+
+    <dimen name="default_fab_elevation">6dp</dimen>
+    <dimen name="dialog_new_food_width">300dp</dimen>
+    <dimen name="card_food_category_height">104dp</dimen>
+    <dimen name="category_icon_size">65dp</dimen>
+    <dimen name="challenge_list_item_height">100dp</dimen>
+    <dimen name="challenge_badge_size">80dp</dimen>
 </resources>
