@@ -7,6 +7,7 @@ import com.ichimaya.androidhackathon.food.model.Category
 
 class ChallengeViewModel: ViewModel() {
     private var challengeList = mutableListOf<Challenge>()
+    private lateinit var challenge: Challenge
 
     private val titles = arrayOf(
         "Fruit Ninja",
@@ -32,17 +33,28 @@ class ChallengeViewModel: ViewModel() {
         "Eat an apple a day for a month",
         "Save lunch money by eating 5 leftovers in a week")
 
+    private val endDates = intArrayOf(
+        7,
+        21,
+        3,
+        30,
+        30,
+        7)
+
+    fun createStartDate(date: Int) {
+        challenge.startDate = date
+    }
 
     fun setupChallengeList(): MutableList<Challenge> {
         for (i in icons.indices) {
-            addChallengesToList(icons[i], titles[i], descriptions[i])
+            addChallengesToList(icons[i], titles[i], descriptions[i], null, endDates[i])
         }
         return challengeList
     }
 
-    private fun addChallengesToList(icon: Int, title: String, description: String):
+    private fun addChallengesToList(icon: Int, title: String, description: String, startDate: Int?, endDate: Int):
         MutableList<Challenge> {
-        val challenge = Challenge(title, icon, description)
+        val challenge = Challenge(title, icon, description, null, endDate)
         challengeList.add(challenge)
         return challengeList
     }

@@ -4,6 +4,6 @@ data class Challenge(
     val title: String,
     val badge: Int,
     val description: String,
-    val startDate: Long,
-    val endDate: Long
+    var startDate: Int? = null,
+    val endDate: Int
 )
