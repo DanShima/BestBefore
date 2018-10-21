@@ -5,5 +5,5 @@ data class Challenge(
     val badge: Int,
     val description: String,
     var startDate: Long? = null,
-    val challengeLength: Int
+    val challengeLength: Int  // the number of days to complete the challenge
 )

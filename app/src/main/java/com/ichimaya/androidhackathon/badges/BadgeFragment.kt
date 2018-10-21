@@ -25,7 +25,7 @@ class BadgeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        return inflater.inflate(R.layout.fragment_badges, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,8 +35,12 @@ class BadgeFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         badgeListAdapter = BadgeListAdapter()
+        // show empty view if there are no badges/achievements
+        val emptyViewVisibility = if (badgeListAdapter.itemCount == 0) View.VISIBLE else View.GONE
+        empty_view_badge.visibility = emptyViewVisibility
+        
         badgeViewModel.observeBadges(activity!!).observeForever { foods -> foods?.let { badgeListAdapter.updateBadges(it) } }
-        detail_recyclerview.apply {
+        badge_recyclerview.apply {
             adapter = badgeListAdapter
             layoutManager = LinearLayoutManager(activity).apply {
                 orientation = LinearLayoutManager.VERTICAL

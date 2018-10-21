@@ -4,8 +4,20 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ImageView
+        android:id="@+id/empty_view_badge"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="34dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="100dp"
+        android:contentDescription="@null"
+        android:src="@drawable/empty_state_achievement"/>
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/detail_recyclerview"
+        android:id="@+id/badge_recyclerview"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

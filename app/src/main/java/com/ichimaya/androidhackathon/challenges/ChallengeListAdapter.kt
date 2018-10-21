@@ -23,8 +23,6 @@ class ChallengeListAdapter(
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
     private lateinit var context: Context
 
-//    var challenges: List<Challenge> = listOf()
-
     fun updateChallenges(challenges: List<Challenge>) {
         this.challenges = challenges
         notifyDataSetChanged()

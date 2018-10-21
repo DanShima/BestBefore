@@ -2,4 +2,5 @@
     <string name="app_name">Best Before</string>
     <string name="expired">EXPIRED :(</string>
     <string name="expiredSoon">EXPIRES SOON!</string>
+    <string name="emptyAchievement">No achievements yet</string>
 </resources>
