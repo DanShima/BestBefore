@@ -47,7 +47,7 @@ class ChallengeFragment : Fragment() {
         challengeListAdapter = ChallengeListAdapter(this::onChallengeSelected)
         challengeViewModel.observeChallenges(activity!!).observeForever {
             val keys = it?.keys
-            challengeListAdapter.updateChallenges(keys?.toList() ?: listOf()) // FIXME put the challenge states into adapter as well
+            challengeListAdapter.updateChallenges(keys?.toList() ?: listOf(), it ?: mapOf())
         }
 
         challenge_recyclerview.apply {
