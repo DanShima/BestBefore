@@ -44,7 +44,11 @@ class ChallengeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        challengeListAdapter = ChallengeListAdapter(this::onChallengeSelected, challengeViewModel.setupChallengeList())
+        challengeListAdapter = ChallengeListAdapter(this::onChallengeSelected)
+        challengeViewModel.observeChallenges(activity!!).observeForever {
+            val keys = it?.keys
+            challengeListAdapter.updateChallenges(keys?.toList() ?: listOf()) // FIXME put the challenge states into adapter as well
+        }
         challenge_recyclerview.apply {
             adapter = challengeListAdapter
             layoutManager = LinearLayoutManager(activity).apply {

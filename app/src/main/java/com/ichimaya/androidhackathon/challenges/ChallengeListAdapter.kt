@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.Food
 import kotlinx.android.synthetic.main.challenge_list_item.view.*
 
 /**
@@ -18,10 +17,10 @@ import kotlinx.android.synthetic.main.challenge_list_item.view.*
 typealias ClickListener = (Int) -> Unit
 
 class ChallengeListAdapter(
-    private val onClickListener: ClickListener,
-    var challenges: List<Challenge>
+    private val onClickListener: ClickListener
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
     private lateinit var context: Context
+    var challenges: List<Challenge> = listOf()
 
     fun updateChallenges(challenges: List<Challenge>) {
         this.challenges = challenges

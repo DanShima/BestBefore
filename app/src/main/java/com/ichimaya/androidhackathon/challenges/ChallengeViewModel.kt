@@ -1,8 +1,13 @@
 package com.ichimaya.androidhackathon.challenges
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import com.ichimaya.androidhackathon.R
+import com.ichimaya.androidhackathon.food.FoodRepository
 import com.ichimaya.androidhackathon.food.model.*
+import com.ichimaya.androidhackathon.user.UserDetailsService
 import com.ichimaya.androidhackathon.utils.toLocalDateTime
 import java.time.Instant
 import java.time.LocalDateTime
@@ -48,18 +53,19 @@ class ChallengeViewModel: ViewModel() {
         challenge.startDate = date
     }
 
-    fun setupChallengeList(): MutableList<Challenge> {
-        for (i in icons.indices) {
-            addChallengesToList(icons[i], titles[i], descriptions[i], null, challengeLength[i])
-        }
-        return challengeList
+    fun observeChallenges(context: Context): LiveData<Map<Challenge, ChallengeState>> {
+        return Transformations
+                .map(FoodRepository.getInstance(UserDetailsService().getUUID(context))
+                .observeFoods(), {foods -> getChallengeMap(foods.values.flatten())})
     }
 
-    private fun addChallengesToList(icon: Int, title: String, description: String, startDate: Long?, challengeLength: Int):
-        MutableList<Challenge> {
-        val challenge = Challenge(title, icon, description, null, challengeLength)
-        challengeList.add(challenge)
-        return challengeList
+    private fun getChallengeMap(foods: List<Food>): Map<Challenge, ChallengeState> {
+        val challengeMap = mutableMapOf<Challenge, ChallengeState>()
+        for (i in icons.indices) {
+            val challenge = Challenge(titles[i], icons[i], descriptions[i], null, challengeLength[i])
+            challengeMap[challenge] = getChallengeState(foods, challenge)
+        }
+        return challengeMap
     }
 
     fun getChallengeState(foods: List<Food>, challenge: Challenge): ChallengeState {
