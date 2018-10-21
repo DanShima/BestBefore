@@ -76,11 +76,18 @@ class ChallengeViewModel: ViewModel() {
                     "Egglicious" -> ChallengeState.SUCCEEDED
                     "Master of Frugality" -> if (noSpoiledFoodForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "An apple a day, keep the doctor away" -> ChallengeState.SUCCEEDED
-                    "Left but not over" -> ChallengeState.SUCCEEDED
+                    "Left but not over" -> if (eatLeftoverForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     else -> ChallengeState.FAILED // ¯\_(ツ)_/¯
                 }
             }
         } ?: return ChallengeState.NOT_STARTED
+    }
+
+    private fun eatLeftoverForAWeek(foods: List<Food>): Boolean {
+        val oneWeekAgo = LocalDateTime.now().minusDays(7)
+        return foods.none {
+            it.category == "Leftover" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(oneWeekAgo)
+        }
     }
 
     private fun noMeatOrDairyFor3Weeks(foods: List<Food>): Boolean {
