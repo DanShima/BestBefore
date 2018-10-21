@@ -36,6 +36,7 @@ class ChallengeListAdapter(
         val title: TextView = itemView.challenge_title
         val icon: ImageView = itemView.challenge_badge
         val description: TextView = itemView.challenge_subtext
+        val challengeState: TextView = itemView.challenge_state
 
 
         override fun onClick(view: View) {
@@ -56,11 +57,19 @@ class ChallengeListAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val item = challenges[position]
+        val state = challengeStateMap[item]
 
         viewHolder.apply {
             icon.setImageResource(item.badge)
             title.text = item.title
             description.text = item.description
+            challengeState.text = when (state) {
+                ChallengeViewModel.ChallengeState.NOT_STARTED -> "Take the challenge!"
+                ChallengeViewModel.ChallengeState.SUCCEEDED -> "You did it!"
+                ChallengeViewModel.ChallengeState.STARTED -> "Challenge in progress"
+                ChallengeViewModel.ChallengeState.FAILED -> "You failed :("
+                null -> ""
+            }
         }
 
 
