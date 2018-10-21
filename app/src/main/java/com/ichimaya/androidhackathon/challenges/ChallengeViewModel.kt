@@ -74,7 +74,7 @@ class ChallengeViewModel: ViewModel() {
                     "Fruit Ninja" -> if (noSpoiledFruitForAWeek(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Vegan  Certificate" -> if (noMeatOrDairyFor3Weeks(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "Egglicious" -> ChallengeState.SUCCEEDED
-                    "Master of Frugality" -> ChallengeState.SUCCEEDED
+                    "Master of Frugality" -> if (noSpoiledFoodForAMonth(foods)) ChallengeState.SUCCEEDED else ChallengeState.FAILED
                     "An apple a day, keep the doctor away" -> ChallengeState.SUCCEEDED
                     "Left but not over" -> ChallengeState.SUCCEEDED
                     else -> ChallengeState.FAILED // ¯\_(ツ)_/¯
@@ -94,6 +94,13 @@ class ChallengeViewModel: ViewModel() {
         val sevenDaysAgo = LocalDateTime.now().minusDays(7)
         return foods.none {
             it.category == "Fruit" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
+        }
+    }
+
+    private fun noSpoiledFoodForAMonth(foods: List<Food>): Boolean {
+        val aMonthAgo = LocalDateTime.now().minusMonths(1)
+        return foods.none {
+            it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(aMonthAgo)
         }
     }
 
