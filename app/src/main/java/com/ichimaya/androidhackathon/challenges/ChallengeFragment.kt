@@ -58,7 +58,7 @@ class ChallengeFragment : Fragment() {
     private fun onChallengeSelected(position: Int) {
         Log.d("TestMe", "$position")
         val builder = AlertDialog.Builder(requireActivity())
-        builder.setMessage("Start this challenge? \n You have ${challengeListAdapter.getItem(position).challengeLength} days to complete it.")
+        builder.setMessage("Start this challenge? \nYou have ${challengeListAdapter.getItem(position).challengeLength} days to complete it.")
             .setTitle(challengeListAdapter.getItem(position).title)
             .setCancelable(true)
             .setPositiveButton("Start") { _, _ -> startChallenge(challengeListAdapter.getItem(position)) }

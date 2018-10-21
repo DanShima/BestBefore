@@ -17,7 +17,7 @@ class ChallengeViewModel: ViewModel() {
         "Vegan  Certificate",
         "Egglicious",
         "Master of Frugality",
-        "An apple a day, keep the doctor away",
+        "An apple a day, keeps the doctor away",
         "Left but not over")
 
     private val icons = intArrayOf(
