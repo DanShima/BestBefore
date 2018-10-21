@@ -5,7 +5,7 @@
     android:id="@+id/recyclerview_detail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="@dimen/margin_small"
     android:background="@color/colorBackground">
 
     <ImageView
@@ -15,9 +15,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_margin="8dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="0dp"
+        android:layout_margin="@dimen/margin_small"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingStart="@dimen/margin_none"
         android:contentDescription="@null"
         android:src="@drawable/ic_veggie"/>
 
@@ -62,7 +62,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="18sp"
-        android:paddingTop="4dp"
+        android:paddingTop="@dimen/margin_xsmall"
         android:textColor="@color/colorError"
         tools:ignore="RelativeOverlap"
         tools:text="Expires 2012-02-02" />

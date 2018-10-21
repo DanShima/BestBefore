@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,8 @@ class DetailFragment : Fragment() {
 
     private fun initDetailRecyclerView() {
         detailListAdapter = DetailListAdapter(categoryTitle, this::openItem, this::markItemAsConsumed)
-        detailViewModel.observeFoods(activity!!, categoryTitle).observeForever { foods -> foods?.let { detailListAdapter.updateFoods(it) } }
+        detailViewModel.observeFoods(activity!!, categoryTitle).observeForever { foods ->
+            detailListAdapter.updateFoods(foods ?: listOf()) }
         detail_recyclerview.apply {
             adapter = detailListAdapter
             layoutManager = LinearLayoutManager(activity).apply {
@@ -52,7 +54,9 @@ class DetailFragment : Fragment() {
 
     private fun markItemAsConsumed(checked: Boolean, food: Food) {
         if (checked) {
-            Toast.makeText(activity, "Awesomesauce! You consumed ${food.name}", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, getString(R.string.toast_food_consumed, food.name), Toast.LENGTH_LONG).apply {
+                setGravity(Gravity.CENTER, 0, 0)
+            }.show()
             detailViewModel.markAsConsumed(activity!!, food)
         }
     }
