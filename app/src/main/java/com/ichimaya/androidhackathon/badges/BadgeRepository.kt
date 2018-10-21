@@ -13,9 +13,9 @@ import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.food.model.isConsumed
 import com.ichimaya.androidhackathon.food.model.isExpired
 import com.ichimaya.androidhackathon.food.model.toFood
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 

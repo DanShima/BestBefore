@@ -1,8 +1,35 @@
 <resources>
     <string name="app_name">Best Before</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_title_new_food">Add New Food Item</string>
+    <string name="dialog_new_food_expiration_date_label">Expiration Date</string>
+    <string name="dialog_new_food_category_label">Category</string>
+    <string name="dialog_new_food_enter_product_name_hint">Enter Product Name</string>
+    <string name="dialog_new_food_expiration_date_hint">Enter Expiration Date</string>
+    <string name="dialog_button_start">Start</string>
+    <string name="dialog_button_add">Add</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_start_challenge_message">Start this challenge? \nYou have %d days to complete it.</string>
+
+    <!-- Toasts -->
+    <string name="toast_challenge_started">Challenge %s has started!</string>
+    <string name="toast_new_food_added">Added %s!</string>
+
+    <!-- Bottom navigation bar -->
+    <string name="navigation_home">Home</string>
+    <string name="navigation_challenges">Challenges</string>
+    <string name="navigation_achievements">Achievements</string>
+
+    <!-- Content Descriptions -->
+    <string name="challenge_badge_content_desc">Challenge Badge</string>
+
+    <string name="emprty_state">Nothing here yet…</string>
+
+    <string name="expiry_date">Expires %s</string>
     <string name="expired">EXPIRED :(</string>
     <string name="expiredSoon">EXPIRES SOON!</string>
     <string name="emptyAchievement">No achievements yet</string>
-    <string name="start">Start</string>
-    <string name="cancel">Cancel</string>
+
+    <string name="challenge_take">Take the challenge!</string>
 </resources>

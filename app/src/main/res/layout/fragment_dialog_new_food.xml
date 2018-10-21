@@ -18,7 +18,7 @@
             android:id="@+id/food_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Enter Product Name" />
+            android:hint="@string/dialog_new_food_enter_product_name_hint" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView
@@ -26,7 +26,7 @@
         android:id="@+id/category_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category"
+        android:text="@string/dialog_new_food_category_label"
         android:layout_marginTop="16dp"
         android:layout_marginStart="4dp"/>
 
@@ -37,10 +37,11 @@
 
     <TextView
         style="@style/TextAppearance.AppCompat.Caption"
+        android:labelFor="@id/expiration_date"
         android:id="@+id/expiration_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expiration Date"
+        android:text="@string/dialog_new_food_expiration_date_label"
         android:layout_marginTop="16dp"
         android:layout_marginStart="4dp"/>
 
@@ -52,6 +53,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="false"
+        android:autofillHints="@string/dialog_new_food_expiration_date_hint"
         android:inputType="date"
         tools:text="Wed, Oct 24, 2018" />
 
@@ -66,14 +68,14 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/dialog_button_cancel"
             android:textColor="@color/colorAccent"/>
         <Button
             android:id="@+id/add_btn"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
+            android:text="@string/dialog_button_add"
             android:textColor="@color/colorAccent"/>
     </LinearLayout>
 

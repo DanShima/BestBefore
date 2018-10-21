@@ -45,8 +45,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         android:paddingTop="4dp"
-        android:text="Lorem ipsum dolor sit amet consecutur etcetera amet consecutur etcetera"
         android:textSize="18sp"
-        tools:ignore="RelativeOverlap" />
+        tools:ignore="RelativeOverlap"
+        tools:text="Lorem ipsum dolor sit amet consecutur etcetera amet consecutur etcetera"/>
 
 </android.support.constraint.ConstraintLayout>

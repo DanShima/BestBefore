@@ -78,7 +78,7 @@ class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.dialog.setTitle("Add New Food Item")
+        this.dialog.setTitle(getString(R.string.dialog_title_new_food))
     }
 
     private fun onClickAdd() {
@@ -88,7 +88,7 @@ class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListen
         val expiraryDate = sdf.parse(dateString)
         val food = createFood(name, expiraryDate.time, selectedCategory)
         FoodRepository.getInstance(UserDetailsService().getUUID(context!!)).registerFood(context!!, food)
-        Toast.makeText(context, "Added $name!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.toast_new_food_added, name), Toast.LENGTH_SHORT).show()
         dismiss()
     }
 }

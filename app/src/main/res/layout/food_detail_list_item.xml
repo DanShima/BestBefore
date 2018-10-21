@@ -17,6 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="8dp"
         android:paddingEnd="16dp"
+        android:paddingStart="0dp"
         android:contentDescription="@null"
         android:src="@drawable/ic_veggie"/>
 
@@ -45,11 +46,11 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:visibility="gone"
-        android:text="EXPIRES SOON!"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/colorError"
-        tools:ignore="RelativeOverlap" />
+        tools:ignore="RelativeOverlap"
+        tools:text="EXPIRES SOON!" />
 
     <TextView
         android:id="@+id/expiration_date"
@@ -60,11 +61,11 @@
         app:layout_constraintLeft_toLeftOf="@id/title_detail"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Expires 2012-02-02"
         android:textSize="18sp"
         android:paddingTop="4dp"
         android:textColor="@color/colorError"
-        tools:ignore="RelativeOverlap" />
+        tools:ignore="RelativeOverlap"
+        tools:text="Expires 2012-02-02" />
 
     <CheckBox
         android:id="@+id/checkbox_detail"

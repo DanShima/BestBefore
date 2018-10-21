@@ -14,7 +14,6 @@ import android.widget.Toast
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.utils.showDividerBetweenListItems
 import kotlinx.android.synthetic.main.fragment_challenge.*
-import timber.log.Timber
 
 /**
  * Shows a list of available challenges for fighting food waste.
@@ -66,11 +65,11 @@ class ChallengeFragment : Fragment() {
      */
     private fun onChallengeSelected(position: Int) {
         val builder = AlertDialog.Builder(requireActivity())
-        builder.setMessage("Start this challenge? \nYou have ${challengeListAdapter.getItem(position).challengeLength} days to complete it.")
+        builder.setMessage(this.getString(R.string.dialog_start_challenge_message, challengeListAdapter.getItem(position).challengeLength))
             .setTitle(challengeListAdapter.getItem(position).title)
             .setCancelable(true)
-            .setPositiveButton(this.getString(R.string.start)) { _, _ -> startChallenge(challengeListAdapter.getItem(position)) }
-            .setNegativeButton(this.getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
+            .setPositiveButton(this.getString(R.string.dialog_button_start)) { _, _ -> startChallenge(challengeListAdapter.getItem(position)) }
+            .setNegativeButton(this.getString(R.string.dialog_button_cancel)) { dialog, _ -> dialog.cancel() }
         val alert = builder.create()
         alert.show()
     }
@@ -79,12 +78,11 @@ class ChallengeFragment : Fragment() {
      * Start counting the time left to complete a challenge
      */
     private fun startChallenge(challenge: Challenge) {
-        Timber.d("START CHALLENGE")
         val editor = sharedPreferences.edit()
         editor.putLong(challenge.title, System.currentTimeMillis())
         editor.apply()
 
-        Toast.makeText(context, "Challenge \"" + challenge.title + "\" has started!", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, this.getString(R.string.toast_challenge_started, challenge.title), Toast.LENGTH_LONG).show()
     }
 
     companion object {

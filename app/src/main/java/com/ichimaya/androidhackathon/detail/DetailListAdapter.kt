@@ -12,10 +12,10 @@ import android.widget.TextView
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.*
 import kotlinx.android.synthetic.main.food_detail_list_item.view.*
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.format.DateTimeFormatter
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 
 /**
@@ -120,7 +120,7 @@ class DetailListAdapter(
                 }
 
                 val expirationDateString = LocalDateTime.ofInstant(Instant.ofEpochMilli(item.expiryDate), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_DATE)
-                expirationDate.text = "Expires $expirationDateString"
+                expirationDate.text = context.getString(R.string.expiry_date, expirationDateString)
             }.bindListeners()
         }
     }
