@@ -2,9 +2,7 @@ package com.ichimaya.androidhackathon.challenges
 
 import android.arch.lifecycle.ViewModel
 import com.ichimaya.androidhackathon.R
-import com.ichimaya.androidhackathon.food.model.Food
-import com.ichimaya.androidhackathon.food.model.isConsumed
-import com.ichimaya.androidhackathon.food.model.isExpired
+import com.ichimaya.androidhackathon.food.model.*
 import com.ichimaya.androidhackathon.utils.toLocalDateTime
 import java.time.Instant
 import java.time.LocalDateTime
@@ -100,7 +98,7 @@ class ChallengeViewModel: ViewModel() {
     private fun noSpoiledFruitForAWeek(foods: List<Food>): Boolean {
         val sevenDaysAgo = LocalDateTime.now().minusDays(7)
         return foods.none {
-            it.category == "Fruit" && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
+            it.getCategoryType() == CategoryType.FRUIT && it.isExpired() && it.expiryDate.toLocalDateTime().isAfter(sevenDaysAgo)
         }
     }
 
@@ -120,4 +118,6 @@ class ChallengeViewModel: ViewModel() {
 }
 
 private fun Food.containsAnimalProducts(): Boolean =
-        category == "Meat" || category == "Dairy" || category == "Fish"
+        getCategoryType() == CategoryType.MEAT
+                || getCategoryType() == CategoryType.DAIRY
+                || getCategoryType() == CategoryType.FISH
