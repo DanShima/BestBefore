@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import android.content.SharedPreferences
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.FoodRepository
 import com.ichimaya.androidhackathon.food.model.*
@@ -49,20 +50,18 @@ class ChallengeViewModel: ViewModel() {
         30,
         7)
 
-    fun createStartDate(date: Long) {
-        challenge.startDate = date
-    }
-
     fun observeChallenges(context: Context): LiveData<Map<Challenge, ChallengeState>> {
         return Transformations
                 .map(FoodRepository.getInstance(UserDetailsService().getUUID(context))
-                .observeFoods(), {foods -> getChallengeMap(foods.values.flatten())})
+                .observeFoods()) { foods -> getChallengeMap(context.getSharedPreferences("challengePrefs", Context.MODE_PRIVATE), foods.values.flatten())}
     }
 
-    private fun getChallengeMap(foods: List<Food>): Map<Challenge, ChallengeState> {
+    private fun getChallengeMap(preferences: SharedPreferences, foods: List<Food>): Map<Challenge, ChallengeState> {
         val challengeMap = mutableMapOf<Challenge, ChallengeState>()
         for (i in icons.indices) {
-            val challenge = Challenge(titles[i], icons[i], descriptions[i], null, challengeLength[i])
+            val long = preferences.getLong(titles[i], 0L)
+            val startDate = if (long == 0L) null else long
+            val challenge = Challenge(titles[i], icons[i], descriptions[i], startDate, challengeLength[i])
             challengeMap[challenge] = getChallengeState(foods, challenge)
         }
         return challengeMap
