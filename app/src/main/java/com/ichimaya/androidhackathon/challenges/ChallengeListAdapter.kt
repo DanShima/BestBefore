@@ -21,9 +21,11 @@ class ChallengeListAdapter(
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
     private lateinit var context: Context
     var challenges: List<Challenge> = listOf()
+    var challengeStateMap: Map<Challenge, ChallengeViewModel.ChallengeState> = mapOf()
 
-    fun updateChallenges(challenges: List<Challenge>) {
+    fun updateChallenges(challenges: List<Challenge>, challengeStateMap: Map<Challenge, ChallengeViewModel.ChallengeState>) {
         this.challenges = challenges
+        this.challengeStateMap = challengeStateMap
         notifyDataSetChanged()
     }
 
