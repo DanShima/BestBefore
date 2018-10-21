@@ -36,9 +36,9 @@ class BadgeFragment : Fragment() {
     private fun initDetailRecyclerView() {
         badgeListAdapter = BadgeListAdapter()
         
-        badgeViewModel.observeBadges(activity!!).observeForever { foods -> foods?.let {
+        badgeViewModel.observeBadges(activity!!).observeForever { badges -> badges?.let {
             // show empty view if there are no badges/achievements
-            val emptyViewVisibility = if (badgeListAdapter.itemCount == 0) View.VISIBLE else View.GONE
+            val emptyViewVisibility = if (badges.isEmpty()) View.VISIBLE else View.GONE
             empty_view_badge.visibility = emptyViewVisibility
 
             badgeListAdapter.updateBadges(it) }
