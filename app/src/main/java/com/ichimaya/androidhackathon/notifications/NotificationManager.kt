@@ -5,9 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v4.content.ContextCompat.getSystemService
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.ichimaya.androidhackathon.MainActivity
 import com.ichimaya.androidhackathon.food.model.Food
 import com.ichimaya.androidhackathon.notifications.NotificationPublisher.Companion.CHANNEL_ID

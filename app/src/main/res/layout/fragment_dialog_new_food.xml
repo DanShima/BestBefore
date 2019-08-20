@@ -6,20 +6,20 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/margin_medium">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name_text_input_layout"
         android:layout_width="@dimen/dialog_new_food_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/food_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/dialog_new_food_enter_product_name_hint"
             android:inputType="textNoSuggestions"
             android:importantForAutofill="no" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         style="@style/TextAppearance.AppCompat.Caption"

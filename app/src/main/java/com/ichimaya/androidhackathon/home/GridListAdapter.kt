@@ -1,18 +1,14 @@
 package com.ichimaya.androidhackathon.home
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Category
-import com.ichimaya.androidhackathon.food.model.Food
 import kotlinx.android.synthetic.main.food_category_grid_item.view.*
 
 

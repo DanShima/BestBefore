@@ -1,6 +1,6 @@
 package com.ichimaya.androidhackathon.home
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.util.Log
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.model.Category

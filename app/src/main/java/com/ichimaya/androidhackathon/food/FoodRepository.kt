@@ -1,6 +1,6 @@
 package com.ichimaya.androidhackathon.food
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.content.Context
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

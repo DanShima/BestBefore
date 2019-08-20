@@ -2,7 +2,6 @@ package com.ichimaya.androidhackathon
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.google.ar.core.HitResult
@@ -12,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_ar.*
 import android.widget.Toast
 import com.google.ar.core.Anchor
 import android.graphics.Point
+import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ModelRenderable
@@ -90,7 +90,7 @@ class ARActivity : AppCompatActivity() {
     private fun updateTracking(): Boolean {
         val frame = arFragment.arSceneView.arFrame
         val wasTracking = isTracking
-        isTracking = frame.camera.trackingState == TrackingState.TRACKING
+        isTracking = frame?.camera?.trackingState == TrackingState.TRACKING
         return isTracking != wasTracking
     }
 

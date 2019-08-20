@@ -2,25 +2,18 @@ package com.ichimaya.androidhackathon.home
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.support.design.widget.TextInputEditText
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.android.material.textfield.TextInputEditText
 import com.ichimaya.androidhackathon.R
 import com.ichimaya.androidhackathon.food.FoodRepository
 import com.ichimaya.androidhackathon.food.model.createFood
 import com.ichimaya.androidhackathon.user.UserDetailsService
 import java.text.SimpleDateFormat
 import java.util.*
-
-
-
-
-/**
- * Created by Marika Driman on 2018-10-20.
- */
 
 class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
 
@@ -38,7 +31,7 @@ class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_dialog_new_food, container)
 
-        dialog.setTitle("Add New Food Item")
+        dialog?.setTitle("Add New Food Item")
 
         val myCalendar = Calendar.getInstance()
 
@@ -78,13 +71,13 @@ class NewFoodDialogFragment : DialogFragment(), AdapterView.OnItemSelectedListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.dialog.setTitle(getString(R.string.dialog_title_new_food))
+        this.dialog?.setTitle(getString(R.string.dialog_title_new_food))
     }
 
     private fun onClickAdd() {
-        val name = this.dialog.findViewById<TextInputEditText>(R.id.food_name).text.toString()
+        val name = this.dialog?.findViewById<TextInputEditText>(R.id.food_name)?.text.toString()
         val sdf = SimpleDateFormat("MM/dd/yy", Locale.US)
-        val dateString = this.dialog.findViewById<EditText>(R.id.expiration_date).text.toString()
+        val dateString = this.dialog?.findViewById<EditText>(R.id.expiration_date)?.text.toString()
         val expiraryDate = sdf.parse(dateString)
         val food = createFood(name, expiraryDate.time, selectedCategory)
         FoodRepository.getInstance(UserDetailsService().getUUID(context!!)).registerFood(context!!, food)

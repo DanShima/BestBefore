@@ -1,7 +1,7 @@
 package com.ichimaya.androidhackathon.badges
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,7 +19,7 @@ import java.time.ZoneId
 import java.util.*
 
 
-class BadgeRepository(val uuid: String) {
+class BadgeRepository(private val uuid: String) {
 
     var badges: MutableLiveData<List<Badge>> = MutableLiveData()
 
